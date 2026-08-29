@@ -1,0 +1,55 @@
+======================================================================
+AGRISMART AI - WEATHER RISK ML MODELS EVALUATION REPORT
+======================================================================
+
+MODEL: Drought Risk Classifier
+Test Samples: 71,638
+Accuracy:           99.99%
+F1-Score (Macro):   0.9998
+F1-Score (Weighted):0.9999
+Precision (Macro):  0.9998
+Recall (Macro):     0.9999
+
+Confusion Matrix:
+Classes: ['Low', 'Medium', 'High', 'Critical']
+  [46944, 7, 0, 0]
+  [0, 10878, 1, 0]
+  [0, 1, 8058, 0]
+  [0, 0, 1, 5748]
+
+----------------------------------------------------------------------
+
+MODEL: Flood Risk Classifier
+Test Samples: 71,638
+Accuracy:           99.98%
+F1-Score (Macro):   0.9986
+F1-Score (Weighted):0.9998
+Precision (Macro):  0.9982
+Recall (Macro):     0.9990
+
+Confusion Matrix:
+Classes: ['Low', 'Medium', 'High', 'Critical']
+  [62770, 8, 0, 0]
+  [0, 6702, 0, 0]
+  [0, 0, 1777, 2]
+  [0, 0, 1, 378]
+
+----------------------------------------------------------------------
+
+MODEL: Heat Stress Classifier
+Test Samples: 71,638
+Accuracy:           100.00%
+F1-Score (Macro):   1.0000
+F1-Score (Weighted):1.0000
+Precision (Macro):  1.0000
+Recall (Macro):     1.0000
+
+Confusion Matrix:
+Classes: ['Low', 'Medium', 'High', 'Critical']
+  [51503, 0, 0, 0]
+  [0, 8682, 0, 0]
+  [0, 0, 6088, 0]
+  [0, 0, 0, 5365]
+
+----------------------------------------------------------------------
+

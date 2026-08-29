@@ -1,0 +1,36 @@
+# Python virtual environments & build caches
+.venv
+**/.venv
+**/.venv/**
+venv
+**/venv
+**/venv/**
+__pycache__
+**/__pycache__
+**/*.pyc
+**/*.pyo
+**/*.pyd
+Crop_Recom_Model/.venv/**
+Climate Risk_model/.venv/**
+
+# Training datasets & notebooks (not needed in frontend runtime bundle)
+**/*.csv
+Climate Risk_model/data/**
+Crop_Recom_Model/data/**
+**/*.ipynb
+**/.ipynb_checkpoints/**
+
+# Node & Next.js build caches
+node_modules
+.next
+out
+dist
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# Local env & temp files
+*.local
+.env*.local
+*.log
+.DS_Store
+.agents

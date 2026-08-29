@@ -1,0 +1,1576 @@
+[
+  {
+    "id": "scheme_001",
+    "name": "PM-KISAN Samman Nidhi",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Financial Assistance"
+    ],
+    "benefits": "Income support for eligible landholding farmer families",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://pmkisan.gov.in/",
+    "source_url": "https://pmkisan.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_002",
+    "name": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Crop Insurance"
+    ],
+    "benefits": "Crop insurance support for notified crops and areas",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://pmfby.gov.in/",
+    "source_url": "https://pmfby.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_003",
+    "name": "Kisan Credit Card (KCC)",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming",
+      "Dairy",
+      "Fisheries"
+    ],
+    "interests": [
+      "Credit",
+      "Financial Assistance"
+    ],
+    "benefits": "Institutional credit support for eligible farmers",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_004",
+    "name": "Pradhan Mantri Krishi Sinchayee Yojana (PMKSY)",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming",
+      "Horticulture"
+    ],
+    "interests": [
+      "Irrigation",
+      "Water Management"
+    ],
+    "benefits": "Support for improving irrigation and water-use efficiency",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://pmksy.gov.in/",
+    "source_url": "https://pmksy.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_005",
+    "name": "Per Drop More Crop",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming",
+      "Horticulture"
+    ],
+    "interests": [
+      "Irrigation",
+      "Water Management"
+    ],
+    "benefits": "Support for micro-irrigation and efficient water use",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://pmksy.gov.in/",
+    "source_url": "https://pmksy.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_006",
+    "name": "PM-KUSUM",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Solar Equipment",
+      "Irrigation"
+    ],
+    "benefits": "Support for solar energy and agricultural pumping components",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://pmkusum.mnre.gov.in/",
+    "source_url": "https://pmkusum.mnre.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_007",
+    "name": "Soil Health Card Scheme",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming",
+      "Horticulture"
+    ],
+    "interests": [
+      "Soil Health",
+      "Fertilizer"
+    ],
+    "benefits": "Soil testing and nutrient-management information",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://soilhealth.dac.gov.in/",
+    "source_url": "https://soilhealth.dac.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_008",
+    "name": "Agriculture Infrastructure Fund (AIF)",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming",
+      "Horticulture",
+      "FPO"
+    ],
+    "interests": [
+      "Infrastructure",
+      "Credit"
+    ],
+    "benefits": "Financing support for agricultural infrastructure projects",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://agriinfra.dac.gov.in/",
+    "source_url": "https://agriinfra.dac.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_009",
+    "name": "Sub-Mission on Agricultural Mechanization (SMAM)",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming",
+      "Horticulture"
+    ],
+    "interests": [
+      "Farm Machinery"
+    ],
+    "benefits": "Assistance for agricultural mechanization subject to guidelines",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://agrimachinery.nic.in/",
+    "source_url": "https://agrimachinery.nic.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_010",
+    "name": "Mission for Integrated Development of Horticulture (MIDH)",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Horticulture"
+    ],
+    "interests": [
+      "Horticulture",
+      "Infrastructure"
+    ],
+    "benefits": "Support for horticulture development and related activities",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://midh.gov.in/",
+    "source_url": "https://midh.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_011",
+    "name": "National Food Security Mission (NFSM)",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Crop Production",
+      "Inputs"
+    ],
+    "benefits": "Support for increasing production and productivity of selected crops",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://nfsm.gov.in/",
+    "source_url": "https://nfsm.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_012",
+    "name": "National Mission on Sustainable Agriculture (NMSA)",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Sustainable Farming",
+      "Soil Health"
+    ],
+    "benefits": "Support for climate-resilient and sustainable agriculture",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://nmsa.dac.gov.in/",
+    "source_url": "https://nmsa.dac.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_013",
+    "name": "Paramparagat Krishi Vikas Yojana (PKVY)",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Organic Farming"
+    ],
+    "benefits": "Support for cluster-based organic farming",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://pgsindia-ncof.gov.in/",
+    "source_url": "https://pgsindia-ncof.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_014",
+    "name": "National Mission on Edible Oils – Oil Palm",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Horticulture"
+    ],
+    "interests": [
+      "Oil Palm",
+      "Crop Diversification"
+    ],
+    "benefits": "Support for oil-palm cultivation and value-chain development",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://nmeo.dac.gov.in/",
+    "source_url": "https://nmeo.dac.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_015",
+    "name": "National Mission on Edible Oils – Oilseeds",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Oilseeds",
+      "Crop Production"
+    ],
+    "benefits": "Support for increasing oilseed production",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_016",
+    "name": "National Beekeeping and Honey Mission (NBHM)",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Beekeeping"
+    ],
+    "interests": [
+      "Beekeeping",
+      "Income Generation"
+    ],
+    "benefits": "Support for scientific beekeeping and honey-sector development",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://nbhm.gov.in/",
+    "source_url": "https://nbhm.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_017",
+    "name": "National Bamboo Mission",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Horticulture",
+      "Agroforestry"
+    ],
+    "interests": [
+      "Bamboo",
+      "Income Generation"
+    ],
+    "benefits": "Support for bamboo cultivation and value-chain development",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://nbm.nic.in/",
+    "source_url": "https://nbm.nic.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_018",
+    "name": "Formation and Promotion of 10,000 Farmer Producer Organizations",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "FPO",
+      "Crop Farming"
+    ],
+    "interests": [
+      "FPO",
+      "Market Linkage"
+    ],
+    "benefits": "Support for formation and promotion of farmer producer organizations",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://sfacindia.com/",
+    "source_url": "https://sfacindia.com/",
+    "active": true
+  },
+  {
+    "id": "scheme_019",
+    "name": "e-NAM",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Market Linkage",
+      "Market Prices"
+    ],
+    "benefits": "Online agricultural market platform for price discovery and trade",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.enam.gov.in/",
+    "source_url": "https://www.enam.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_020",
+    "name": "Agri-Clinics and Agri-Business Centres Scheme",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming",
+      "Agribusiness"
+    ],
+    "interests": [
+      "Training",
+      "Agribusiness"
+    ],
+    "benefits": "Support for agricultural extension and agri-business services",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://acabcmis.gov.in/",
+    "source_url": "https://acabcmis.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_021",
+    "name": "Integrated Scheme for Agricultural Marketing (ISAM)",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming",
+      "FPO"
+    ],
+    "interests": [
+      "Marketing",
+      "Infrastructure"
+    ],
+    "benefits": "Support for agricultural marketing infrastructure and development",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_022",
+    "name": "National Agriculture Development Programme (RKVY)",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming",
+      "Horticulture"
+    ],
+    "interests": [
+      "Agriculture Development"
+    ],
+    "benefits": "State-led support for agriculture and allied-sector development",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://rkvy.nic.in/",
+    "source_url": "https://rkvy.nic.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_023",
+    "name": "Sub-Mission on Seeds and Planting Material",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming",
+      "Horticulture"
+    ],
+    "interests": [
+      "Seeds",
+      "Inputs"
+    ],
+    "benefits": "Support for quality seed and planting-material systems",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_024",
+    "name": "Sub-Mission on Plant Protection",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming",
+      "Horticulture"
+    ],
+    "interests": [
+      "Crop Protection",
+      "Pest Management"
+    ],
+    "benefits": "Support for integrated plant protection and pest management",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://ppqs.gov.in/",
+    "source_url": "https://ppqs.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_025",
+    "name": "National Mission on Agricultural Extension and Technology",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Training",
+      "Extension"
+    ],
+    "benefits": "Support for agricultural extension and technology adoption",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_026",
+    "name": "Rainfed Area Development",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Rainfed Farming",
+      "Water Management"
+    ],
+    "benefits": "Support for integrated farming in rainfed areas",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_027",
+    "name": "Crop Diversification Programme",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Crop Diversification",
+      "Sustainable Farming"
+    ],
+    "benefits": "Support for diversification toward suitable alternative crops",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_028",
+    "name": "National Mission for Protein Supplements",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Dairy",
+      "Livestock",
+      "Fisheries"
+    ],
+    "interests": [
+      "Livestock",
+      "Income Generation"
+    ],
+    "benefits": "Support for livestock and allied-sector development",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_029",
+    "name": "National Livestock Mission (NLM)",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Livestock",
+      "Poultry",
+      "Sheep",
+      "Goat"
+    ],
+    "interests": [
+      "Livestock",
+      "Entrepreneurship"
+    ],
+    "benefits": "Support for livestock entrepreneurship and development",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://nlm.udyamimitra.in/",
+    "source_url": "https://nlm.udyamimitra.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_030",
+    "name": "Pradhan Mantri Matsya Sampada Yojana (PMMSY)",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Fisheries"
+    ],
+    "interests": [
+      "Fisheries",
+      "Infrastructure"
+    ],
+    "benefits": "Support for sustainable fisheries development",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://pmmsy.dof.gov.in/",
+    "source_url": "https://pmmsy.dof.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_031",
+    "name": "Rashtriya Gokul Mission",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Dairy",
+      "Livestock"
+    ],
+    "interests": [
+      "Dairy",
+      "Livestock"
+    ],
+    "benefits": "Support for development and conservation of indigenous bovine breeds",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://dahd.nic.in/",
+    "source_url": "https://dahd.nic.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_032",
+    "name": "National Programme for Dairy Development (NPDD)",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Dairy"
+    ],
+    "interests": [
+      "Dairy",
+      "Infrastructure"
+    ],
+    "benefits": "Support for dairy development and milk infrastructure",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://dahd.nic.in/",
+    "source_url": "https://dahd.nic.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_033",
+    "name": "Animal Husbandry Infrastructure Development Fund (AHIDF)",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Dairy",
+      "Livestock",
+      "Poultry"
+    ],
+    "interests": [
+      "Infrastructure",
+      "Credit"
+    ],
+    "benefits": "Financing support for eligible animal-husbandry infrastructure",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://ahidf.udyamimitra.in/",
+    "source_url": "https://ahidf.udyamimitra.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_034",
+    "name": "Agriculture Technology Management Agency (ATMA)",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Training",
+      "Extension"
+    ],
+    "benefits": "Farmer training, demonstrations and agricultural extension support",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_035",
+    "name": "National Project on Soil Health and Fertility",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Soil Health",
+      "Fertilizer"
+    ],
+    "benefits": "Support for soil-health and balanced nutrient management",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://soilhealth.dac.gov.in/",
+    "source_url": "https://soilhealth.dac.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_036",
+    "name": "Kisan Rin Portal",
+    "level": "Central",
+    "states": [
+      "ALL"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Credit"
+    ],
+    "benefits": "Digital support related to Kisan Credit Card and agricultural credit",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_037",
+    "name": "Maharashtra Namo Shetkari Mahasanman Nidhi Yojana",
+    "level": "State",
+    "states": [
+      "Maharashtra"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Financial Assistance"
+    ],
+    "benefits": "Additional income support for eligible PM-KISAN beneficiaries in Maharashtra",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/schemes/namo-shetkari-mahasanman-nidhi-yojana",
+    "source_url": "https://www.myscheme.gov.in/schemes/namo-shetkari-mahasanman-nidhi-yojana",
+    "active": true
+  },
+  {
+    "id": "scheme_038",
+    "name": "Maharashtra Magel Tyala Saur Krushi Pump Yojana",
+    "level": "State",
+    "states": [
+      "Maharashtra"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Solar Equipment",
+      "Irrigation"
+    ],
+    "benefits": "Solar agricultural pump support under applicable Maharashtra guidelines",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.mahaurja.com/",
+    "source_url": "https://www.mahaurja.com/",
+    "active": true
+  },
+  {
+    "id": "scheme_039",
+    "name": "Maharashtra Dr. Babasaheb Ambedkar Krushi Swavalamban Yojana",
+    "level": "State",
+    "states": [
+      "Maharashtra"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Irrigation",
+      "Financial Assistance"
+    ],
+    "benefits": "Agricultural development assistance for eligible beneficiaries",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_040",
+    "name": "Maharashtra Birsa Munda Krushi Kranti Yojana",
+    "level": "State",
+    "states": [
+      "Maharashtra"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Irrigation",
+      "Farm Development"
+    ],
+    "benefits": "Agricultural development assistance for eligible beneficiaries",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_041",
+    "name": "Maharashtra Chief Minister Sustainable Agriculture Irrigation-related Assistance",
+    "level": "State",
+    "states": [
+      "Maharashtra"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Irrigation",
+      "Water Management"
+    ],
+    "benefits": "State support for eligible irrigation and water-management activities",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_042",
+    "name": "Maharashtra Farm Mechanization Assistance",
+    "level": "State",
+    "states": [
+      "Maharashtra"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming",
+      "Horticulture"
+    ],
+    "interests": [
+      "Farm Machinery"
+    ],
+    "benefits": "Assistance for eligible agricultural machinery and equipment",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://mahadbt.maharashtra.gov.in/",
+    "source_url": "https://mahadbt.maharashtra.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_043",
+    "name": "Madhya Pradesh Mukhyamantri Kisan Kalyan Yojana",
+    "level": "State",
+    "states": [
+      "Madhya Pradesh"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Financial Assistance"
+    ],
+    "benefits": "State income support for eligible farmers",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_044",
+    "name": "Madhya Pradesh Kisan Anudan Yojana",
+    "level": "State",
+    "states": [
+      "Madhya Pradesh"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Farm Machinery",
+      "Financial Assistance"
+    ],
+    "benefits": "Assistance for eligible agricultural equipment and inputs",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://farmer.mpdage.org/",
+    "source_url": "https://farmer.mpdage.org/",
+    "active": true
+  },
+  {
+    "id": "scheme_045",
+    "name": "Gujarat Kisan Suryoday Yojana",
+    "level": "State",
+    "states": [
+      "Gujarat"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Irrigation",
+      "Solar Energy"
+    ],
+    "benefits": "Support for reliable electricity supply for agricultural irrigation",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_046",
+    "name": "Gujarat Krushi Yantrikikaran Assistance",
+    "level": "State",
+    "states": [
+      "Gujarat"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Farm Machinery"
+    ],
+    "benefits": "Assistance for eligible agricultural machinery",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://ikhedut.gujarat.gov.in/",
+    "source_url": "https://ikhedut.gujarat.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_047",
+    "name": "Karnataka Raitha Shakti Scheme",
+    "level": "State",
+    "states": [
+      "Karnataka"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Farm Machinery",
+      "Fuel Assistance"
+    ],
+    "benefits": "Support intended to reduce input/fuel burden for eligible farmers",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://raitamitra.karnataka.gov.in/",
+    "source_url": "https://raitamitra.karnataka.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_048",
+    "name": "Karnataka Krishi Bhagya",
+    "level": "State",
+    "states": [
+      "Karnataka"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Water Management",
+      "Rainfed Farming"
+    ],
+    "benefits": "Support for water-management and rainfed farming practices",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://raitamitra.karnataka.gov.in/",
+    "source_url": "https://raitamitra.karnataka.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_049",
+    "name": "Karnataka Bhoochetana",
+    "level": "State",
+    "states": [
+      "Karnataka"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Soil Health",
+      "Crop Production"
+    ],
+    "benefits": "Soil and crop productivity improvement support",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://raitamitra.karnataka.gov.in/",
+    "source_url": "https://raitamitra.karnataka.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_050",
+    "name": "Tamil Nadu Micro Irrigation Assistance",
+    "level": "State",
+    "states": [
+      "Tamil Nadu"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming",
+      "Horticulture"
+    ],
+    "interests": [
+      "Irrigation",
+      "Water Management"
+    ],
+    "benefits": "Assistance for eligible micro-irrigation systems",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_051",
+    "name": "Tamil Nadu Agricultural Mechanization Assistance",
+    "level": "State",
+    "states": [
+      "Tamil Nadu"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming",
+      "Horticulture"
+    ],
+    "interests": [
+      "Farm Machinery"
+    ],
+    "benefits": "Assistance for eligible agricultural machinery",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_052",
+    "name": "Tamil Nadu Horticulture Development Assistance",
+    "level": "State",
+    "states": [
+      "Tamil Nadu"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Horticulture"
+    ],
+    "interests": [
+      "Horticulture",
+      "Financial Assistance"
+    ],
+    "benefits": "Support for eligible horticulture development activities",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_053",
+    "name": "Uttar Pradesh Agricultural Equipment Subsidy",
+    "level": "State",
+    "states": [
+      "Uttar Pradesh"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Farm Machinery"
+    ],
+    "benefits": "Assistance for eligible agricultural machinery under state programmes",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_054",
+    "name": "Uttar Pradesh Micro Irrigation Assistance",
+    "level": "State",
+    "states": [
+      "Uttar Pradesh"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming",
+      "Horticulture"
+    ],
+    "interests": [
+      "Irrigation",
+      "Water Management"
+    ],
+    "benefits": "Assistance for eligible micro-irrigation activities",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_055",
+    "name": "Rajasthan Agricultural Equipment Subsidy",
+    "level": "State",
+    "states": [
+      "Rajasthan"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Farm Machinery"
+    ],
+    "benefits": "Assistance for eligible agricultural machinery under state programmes",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_056",
+    "name": "Rajasthan Micro Irrigation Assistance",
+    "level": "State",
+    "states": [
+      "Rajasthan"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming",
+      "Horticulture"
+    ],
+    "interests": [
+      "Irrigation",
+      "Water Management"
+    ],
+    "benefits": "Assistance for eligible micro-irrigation activities",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_057",
+    "name": "Punjab Agricultural Mechanization Assistance",
+    "level": "State",
+    "states": [
+      "Punjab"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Farm Machinery"
+    ],
+    "benefits": "Assistance for eligible agricultural machinery and equipment",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_058",
+    "name": "Haryana Agricultural Mechanization Assistance",
+    "level": "State",
+    "states": [
+      "Haryana"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Farm Machinery"
+    ],
+    "benefits": "Assistance for eligible agricultural machinery and equipment",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://www.myscheme.gov.in/",
+    "source_url": "https://www.myscheme.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_059",
+    "name": "Odisha KALIA",
+    "level": "State",
+    "states": [
+      "Odisha"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming",
+      "Livestock",
+      "Fisheries"
+    ],
+    "interests": [
+      "Financial Assistance"
+    ],
+    "benefits": "Livelihood and income support for eligible farming and allied-sector beneficiaries",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://kalia.odisha.gov.in/",
+    "source_url": "https://kalia.odisha.gov.in/",
+    "active": true
+  },
+  {
+    "id": "scheme_060",
+    "name": "West Bengal Krishak Bandhu",
+    "level": "State",
+    "states": [
+      "West Bengal"
+    ],
+    "districts": [
+      "ALL"
+    ],
+    "farming_types": [
+      "Crop Farming"
+    ],
+    "interests": [
+      "Financial Assistance",
+      "Life Insurance"
+    ],
+    "benefits": "Financial and insurance-related support for eligible farmers",
+    "eligibility": "Check the current official scheme guidelines before showing a final eligibility decision.",
+    "documents_required": [
+      "As specified by the official scheme portal"
+    ],
+    "application_url": "https://krishakbandhu.wb.gov.in/",
+    "source_url": "https://krishakbandhu.wb.gov.in/",
+    "active": true
+  }
+]

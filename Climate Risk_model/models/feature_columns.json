@@ -1,0 +1,51 @@
+{
+  "drought_risk_model": [
+    "latitude",
+    "longitude",
+    "T2M",
+    "T2M_MAX",
+    "T2M_MIN",
+    "RH2M",
+    "PS",
+    "rainfall_3d",
+    "rainfall_7d",
+    "rainfall_14d",
+    "rainfall_30d",
+    "temp_avg_7d",
+    "temp_max_7d",
+    "temp_avg_30d",
+    "rh_avg_7d",
+    "rainfall_dev_30d",
+    "temp_dev_30d"
+  ],
+  "flood_risk_model": [
+    "latitude",
+    "longitude",
+    "PRECTOTCORR",
+    "RH2M",
+    "WS10M",
+    "PS",
+    "rainfall_3d",
+    "rainfall_7d",
+    "rainfall_14d",
+    "rainfall_30d",
+    "rainfall_dev_30d",
+    "temp_avg_7d"
+  ],
+  "heat_stress_model": [
+    "latitude",
+    "longitude",
+    "T2M",
+    "T2M_MAX",
+    "T2M_MIN",
+    "RH2M",
+    "WS10M",
+    "temp_range",
+    "temp_avg_7d",
+    "temp_max_7d",
+    "temp_avg_30d",
+    "rh_avg_7d",
+    "consecutive_hot_days",
+    "temp_dev_30d"
+  ]
+}
