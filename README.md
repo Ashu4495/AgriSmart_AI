@@ -25,10 +25,9 @@ An end-to-end, production-ready AI and Machine Learning agricultural intelligenc
    - [1. Crop Intelligence & ML Recommendation](#1-crop-intelligence--ml-recommendation)
    - [2. Weather Intelligence & Climate Risk Ensemble](#2-weather-intelligence--climate-risk-ensemble)
    - [3. Soil Chemistry & Plant Disease Scanner](#3-soil-chemistry--plant-disease-scanner)
-   - [4. Farm Planning & Seasonal Task Manager](#4-farm-planning--seasonal-task-manager)
-   - [5. Live Mandi Market Rates & Financial Analytics](#5-live-mandi-market-rates--financial-analytics)
-   - [6. Government Schemes & Subsidies Directory](#6-government-schemes--subsidies-directory)
-   - [7. Autonomous AI Agronomist & RAG Assistant](#7-autonomous-ai-agronomist--rag-assistant)
+   - [4. Live Mandi Market Rates & Financial Analytics](#4-live-mandi-market-rates--financial-analytics)
+   - [5. Government Schemes & Subsidies Directory](#5-government-schemes--subsidies-directory)
+   - [6. Autonomous AI Agronomist & RAG Assistant](#6-autonomous-ai-agronomist--rag-assistant)
 3. [System Architecture](#-system-architecture)
 4. [Machine Learning Models & Accuracy](#-machine-learning-models--accuracy)
 5. [Database Schema & Data Persistence](#-database-schema--data-persistence)
@@ -77,27 +76,20 @@ Indian agriculture faces major challenges that limit smallholder farmer profitab
   - **Interactive Treatment Tracking:** Allows marking fields as "Treated" or "Pending" with persistent database updates.
   - **Soil Health Test Modal:** Allows manual logging of official Soil Health Card lab results, automatically re-balancing fertilizer dosing recommendations.
 
-### 4. Farm Planning & Seasonal Task Manager
-- **What It Does:** Serves as a digital farm diary and automated operational scheduler.
-- **How It Works:**
-  - **Crop Planning:** Farmers add planned parcels (crop variety, area, sowing date, expected harvest date).
-  - **Automated Task Scheduling:** Adding a planned crop automatically seeds 5 structured lifecycle tasks into the `farm_tasks` table: Land Preparation, Seed Treatment & Sowing, 1st Irrigation & Weeding, Top-Dressing Fertilizer Dose, and Harvesting.
-  - **Task Toggling:** Farmers mark tasks complete with live database synchronization.
-
-### 5. Live Mandi Market Rates & Financial Analytics
+### 4. Live Mandi Market Rates & Financial Analytics
 - **What It Does:** Displays real-time wholesale APMC Mandi prices across 24 key agricultural commodities across all major Indian states.
 - **How It Works:**
   - Aggregates live market data (Arrivals, Min Price, Max Price, Modal Price ₹/Quintal, State Trends).
   - Provides interactive **30-Day Price Trend Sparklines** with dynamic hover tooltips.
   - Highlights highest-paying Mandi hubs to assist farmers in timing their crop sales.
 
-### 6. Government Schemes & Subsidies Directory
+### 5. Government Schemes & Subsidies Directory
 - **What It Does:** A searchable, state-filtered repository of 60 official government schemes, subsidies, insurance, and financial support initiatives.
 - **How It Works:**
   - Seeded into InsForge PostgreSQL (`schemes` table) with structured eligibility rules, authority bodies, monetary benefits, and direct application links (e.g., *PM-Kisan Samman Nidhi*, *PM Fasal Bima Yojana*, *Kisan Credit Card*, *Sub-Mission on Agricultural Mechanization*).
   - Instant search by keyword, category (Credit, Insurance, Machinery, Organic Farming), and state.
 
-### 7. Autonomous AI Agronomist & RAG Assistant
+### 6. Autonomous AI Agronomist & RAG Assistant
 - **What It Does:** A 24/7 conversational agricultural expert supporting English, Hindi, and regional dialects with text and voice output.
 - **How It Works:**
   - **LLM Gateway:** Powered by InsForge AI Model Gateway using `meta-llama/llama-3.3-70b-instruct:free`.
@@ -157,13 +149,11 @@ The backend utilizes **InsForge PostgreSQL** with strict Row-Level Security (RLS
 1. `farm_profiles`: Stores farmer metadata (full name, phone, state, district, village, farm acreage, soil type, irrigation source).
 2. `soil_readings`: Historic soil test parameters (N, P, K, pH, organic carbon, source).
 3. `disease_scans`: Scanned leaf images (`url`), identified pathogen, severity, organic & chemical cures, `treated` flag.
-4. `planned_crops`: Current farming plan (variety, acreage, sowing/harvest dates, expected yield).
-5. `farm_tasks`: Operational farming tasks linked to planned crops with completion status.
-6. `schemes`: 60 official government schemes with structured JSON eligibility criteria.
-7. `crop_recommendations`: Historic recommendation logs with confidence scores.
-8. `market_price_cache`: Cached Mandi price feeds.
-9. `notifications`: Farmer advisories and alert triggers.
-10. `chat_messages`: Conversational history with the AI Assistant.
+4. `schemes`: 60 official government schemes with structured JSON eligibility criteria.
+5. `crop_recommendations`: Historic recommendation logs with confidence scores.
+6. `market_price_cache`: Cached Mandi price feeds.
+7. `notifications`: Farmer advisories and alert triggers.
+8. `chat_messages`: Conversational history with the AI Assistant.
 
 ---
 
@@ -268,13 +258,3 @@ npx insforge deployments deploy .
 
 ---
 
-## 📄 License
-
-Distributed under the **MIT License**. See `LICENSE` for more information.
-
----
-
-## 👨‍💻 Developed By
-
-**Ashu** — [GitHub Profile](https://github.com/Ashu4495)  
-Project Repository: [AgriSmart_AI](https://github.com/Ashu4495/AgriSmart_AI.git)
