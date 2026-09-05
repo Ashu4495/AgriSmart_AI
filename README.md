@@ -202,14 +202,24 @@ npm install
 
 ### 3. Setup Python ML Environment (Optional for local training)
 ```bash
+# For Crop Recommendation
 cd backend/ml/crop_recommendation
 python -m venv .venv
 # On Windows:
 .venv\Scripts\activate
 # On Linux/macOS:
 source .venv/bin/activate
-
 pip install -r api/requirements.txt
+cd ../../..
+
+# For Climate Risk
+cd backend/ml/climate_risk
+python -m venv .venv
+# On Windows:
+.venv\Scripts\activate
+# On Linux/macOS:
+source .venv/bin/activate
+pip install -r requirements.txt
 cd ../../..
 ```
 
