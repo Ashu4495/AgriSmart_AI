@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getRawKnowledgeResources, filterAndRankKnowledge, type KnowledgeFilterParams } from "@/lib/knowledge";
+import { fetchAllKnowledgeResources, filterAndRankKnowledge, type KnowledgeFilterParams } from "@/lib/knowledge";
 
 export const dynamic = "force-dynamic";
 
@@ -8,6 +8,7 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
 
     const category = searchParams.get("category") || "All";
+    const resourceType = searchParams.get("resourceType") || "All";
     const query = searchParams.get("query") || "";
     const state = searchParams.get("state") || "";
     const crop = searchParams.get("crop") || "";
@@ -15,13 +16,14 @@ export async function GET(req: NextRequest) {
 
     const filters: KnowledgeFilterParams = {
       category,
+      resourceType,
       query,
       state,
       crop,
       farmingType,
     };
 
-    const allResources = getRawKnowledgeResources();
+    const allResources = await fetchAllKnowledgeResources();
 
     if (!allResources || allResources.length === 0) {
       return NextResponse.json(
@@ -42,9 +44,8 @@ export async function GET(req: NextRequest) {
       All: allResources.length,
       "Best Practices": allResources.filter(r => r.category.toLowerCase().includes("practice")).length,
       "Crop Guide": allResources.filter(r => r.category.toLowerCase().includes("crop") || r.category.toLowerCase().includes("guide")).length,
-      Videos: allResources.filter(r => r.is_video || r.category.toLowerCase().includes("video")).length,
-      Blogs: allResources.filter(r => r.category.toLowerCase().includes("blog") || r.category.toLowerCase().includes("article")).length,
-      "Success Stories": allResources.filter(r => r.category.toLowerCase().includes("success") || r.category.toLowerCase().includes("story")).length,
+      "Government Schemes": allResources.filter(r => r.category.toLowerCase().includes("scheme")).length,
+      "Videos": allResources.filter(r => r.resource_type === "VIDEO").length,
     };
 
     return NextResponse.json({

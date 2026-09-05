@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { DashboardShell } from "@/components/dashboard/shell";
 import { useAccount } from "@/components/landing/user-controls";
 import { useLocation } from "@/lib/location";
+import { useLanguage } from "@/lib/i18n";
 import {
   Sprout,
   Sun,
@@ -22,7 +23,7 @@ import {
   Stethoscope,
   BarChart3,
   Bot,
-  Mic,
+  Landmark,
   Loader2,
 } from "lucide-react";
 import cropWheat from "@/assets/crop-wheat.jpg";
@@ -83,19 +84,45 @@ interface DashboardData {
 export default function DashboardPage() {
   const { user, displayName } = useAccount();
   const { location, coords } = useLocation();
+  const { t, lang } = useLanguage();
 
-  const farmerGreeting = displayName
-    ? `Good Morning, ${displayName}! 👋`
-    : "Good Morning, Farmer! 👋";
+  const farmerGreeting = useMemo(() => {
+    const hour = new Date().getHours();
+    const timeGreeting =
+      hour < 12
+        ? t.dashboard.morning
+        : hour < 17
+          ? t.dashboard.afternoon
+          : t.dashboard.evening;
 
-  const [dateStr] = useState(() => {
-    return new Date().toLocaleDateString("en-GB", {
-      weekday: "long",
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    });
-  });
+    return displayName
+      ? `${timeGreeting}, ${displayName}! 👋`
+      : `${timeGreeting}, ${t.app.farmer}! 👋`;
+  }, [displayName, t]);
+
+  const dateStr = useMemo(() => {
+    const localeMap: Record<string, string> = {
+      en: "en-GB",
+      hi: "hi-IN",
+      mr: "mr-IN",
+      pa: "pa-IN",
+    };
+    try {
+      return new Date().toLocaleDateString(localeMap[lang] || "en-GB", {
+        weekday: "long",
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      });
+    } catch {
+      return new Date().toLocaleDateString("en-GB", {
+        weekday: "long",
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      });
+    }
+  }, [lang]);
 
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<DashboardData | null>(null);
@@ -137,8 +164,8 @@ export default function DashboardPage() {
 
   return (
     <DashboardShell
-      headerTitle="Dashboard"
-      headerSubtitle="Smart Farming, Better Future"
+      headerTitle={t.dashboard.page.dashboard}
+      headerSubtitle={t.dashboard.page.smartFarmingTagline}
     >
       <div className="space-y-6 pb-8">
         {/* ======================================================== */}
@@ -156,13 +183,13 @@ export default function DashboardPage() {
               {farmerGreeting}
             </h2>
             <p className="text-xs text-muted-foreground mt-0.5">
-              Here’s your farm intelligence for today.
+              {t.dashboard.page.intelligenceToday}
             </p>
           </div>
 
           <div className="flex items-center gap-2 self-start rounded-xl border border-border/80 bg-card px-3.5 py-2 text-xs font-semibold text-foreground shadow-2xs">
             <Calendar className="h-4 w-4 text-emerald-600" />
-            <span>{dateStr || "Tuesday, 27 May 2025"}</span>
+            <span>{dateStr}</span>
           </div>
         </div>
 
@@ -184,7 +211,7 @@ export default function DashboardPage() {
                 </div>
               </div>
               <span className="mt-2 block text-[10px] font-medium text-muted-foreground">
-                Recommended Crop
+                {t.dashboard.page.recommendedCrop}
               </span>
               <div className="mt-0.5 flex items-center justify-between">
                 {isLoading ? (
@@ -198,12 +225,12 @@ export default function DashboardPage() {
                       {Math.round(
                         data.cropRecommendation.confidence_score * 100,
                       )}
-                      % Match
+                      % {t.dashboard.page.match}
                     </span>
                   </>
                 ) : (
                   <span className="text-[11px] font-bold text-muted-foreground">
-                    Data unavailable
+                    {t.dashboard.page.dataUnavailable}
                   </span>
                 )}
               </div>
@@ -212,7 +239,7 @@ export default function DashboardPage() {
               href="/crop-intelligence"
               className="mt-3 inline-flex items-center gap-1 text-[10px] font-bold text-[#168447] hover:underline"
             >
-              <span>View Details</span>
+              <span>{t.dashboard.page.viewDetails}</span>
               <ArrowRight className="h-2.5 w-2.5" />
             </Link>
           </motion.div>
@@ -231,7 +258,7 @@ export default function DashboardPage() {
                 </div>
               </div>
               <span className="mt-2 block text-[10px] font-medium text-muted-foreground">
-                Weather Today
+                {t.dashboard.page.weatherToday}
               </span>
               <div className="mt-0.5 flex items-baseline justify-between">
                 {isLoading ? (
@@ -242,12 +269,12 @@ export default function DashboardPage() {
                       {data.weather.temperature}°C
                     </span>
                     <span className="text-[9px] text-muted-foreground">
-                      {data.weather.humidity}% Humidity
+                      {data.weather.humidity}% {t.dashboard.page.humidity}
                     </span>
                   </>
                 ) : (
                   <span className="text-[11px] font-bold text-muted-foreground">
-                    Unavailable
+                    {t.dashboard.page.unavailable}
                   </span>
                 )}
               </div>
@@ -256,7 +283,7 @@ export default function DashboardPage() {
               href="/weather-climate"
               className="mt-3 inline-flex items-center gap-1 text-[10px] font-bold text-blue-600 hover:underline dark:text-blue-400"
             >
-              <span>View Forecast</span>
+              <span>{t.dashboard.page.viewForecast}</span>
               <ArrowRight className="h-2.5 w-2.5" />
             </Link>
           </motion.div>
@@ -275,7 +302,7 @@ export default function DashboardPage() {
                 </div>
               </div>
               <span className="mt-2 block text-[10px] font-medium text-muted-foreground">
-                Soil Health Score
+                {t.dashboard.page.soilHealthScore}
               </span>
               <div className="mt-0.5 flex items-center justify-between">
                 {isLoading ? (
@@ -291,7 +318,7 @@ export default function DashboardPage() {
                   </>
                 ) : (
                   <span className="text-[10px] font-medium text-amber-800 dark:text-amber-400">
-                    Add soil data to view
+                    {t.dashboard.page.addSoilData}
                   </span>
                 )}
               </div>
@@ -300,7 +327,7 @@ export default function DashboardPage() {
               href="/soil-crop-health"
               className="mt-3 inline-flex items-center gap-1 text-[10px] font-bold text-amber-700 hover:underline dark:text-amber-400"
             >
-              <span>View Soil Report</span>
+              <span>{t.dashboard.page.viewSoilReport}</span>
               <ArrowRight className="h-2.5 w-2.5" />
             </Link>
           </motion.div>
@@ -319,7 +346,7 @@ export default function DashboardPage() {
                 </div>
               </div>
               <span className="mt-2 block text-[10px] font-medium text-muted-foreground">
-                Market Price{" "}
+                {t.dashboard.page.marketPrice}{" "}
                 {data?.marketPrices?.[0]
                   ? `(${data.marketPrices[0].name})`
                   : ""}
@@ -343,7 +370,7 @@ export default function DashboardPage() {
                   </>
                 ) : (
                   <span className="text-[11px] font-bold text-muted-foreground">
-                    Unavailable
+                    {t.dashboard.page.unavailable}
                   </span>
                 )}
               </div>
@@ -352,7 +379,7 @@ export default function DashboardPage() {
               href="/market-finance"
               className="mt-3 inline-flex items-center gap-1 text-[10px] font-bold text-purple-700 hover:underline dark:text-purple-400"
             >
-              <span>View Market</span>
+              <span>{t.dashboard.page.viewMarket}</span>
               <ArrowRight className="h-2.5 w-2.5" />
             </Link>
           </motion.div>
@@ -371,7 +398,7 @@ export default function DashboardPage() {
                 </div>
               </div>
               <span className="mt-2 block text-[10px] font-medium text-muted-foreground">
-                Crop Risk
+                {t.dashboard.page.cropRisk}
               </span>
               <div className="mt-0.5 flex items-baseline justify-between">
                 {isLoading ? (
@@ -382,12 +409,12 @@ export default function DashboardPage() {
                       {data.cropRisk.level}
                     </span>
                     <span className="text-[9px] text-muted-foreground">
-                      Risk Level
+                      {t.dashboard.page.riskLevel}
                     </span>
                   </>
                 ) : (
                   <span className="text-[10px] font-medium text-rose-800 dark:text-rose-400">
-                    Analysis unavailable
+                    {t.dashboard.page.analysisUnavailable}
                   </span>
                 )}
               </div>
@@ -396,7 +423,7 @@ export default function DashboardPage() {
               href="/weather-climate#risk"
               className="mt-3 inline-flex items-center gap-1 text-[10px] font-bold text-rose-600 hover:underline dark:text-rose-400"
             >
-              <span>View Analysis</span>
+              <span>{t.dashboard.page.viewAnalysis}</span>
               <ArrowRight className="h-2.5 w-2.5" />
             </Link>
           </motion.div>
@@ -415,7 +442,7 @@ export default function DashboardPage() {
                 </div>
               </div>
               <span className="mt-2 block text-[10px] font-medium text-muted-foreground">
-                Next Task
+                {t.dashboard.page.nextTask}
               </span>
               <div className="mt-0.5 flex items-baseline justify-between">
                 {isLoading ? (
@@ -431,18 +458,12 @@ export default function DashboardPage() {
                   </>
                 ) : (
                   <span className="text-[10px] font-medium text-teal-800 dark:text-teal-400">
-                    No upcoming tasks
+                    {t.dashboard.page.noUpcomingTasks}
                   </span>
                 )}
               </div>
             </div>
-            <Link
-              href="/farm-planning"
-              className="mt-3 inline-flex items-center gap-1 text-[10px] font-bold text-teal-700 hover:underline dark:text-teal-400"
-            >
-              <span>View Schedule</span>
-              <ArrowRight className="h-2.5 w-2.5" />
-            </Link>
+
           </motion.div>
         </div>
 
@@ -463,7 +484,7 @@ export default function DashboardPage() {
               <div className="flex items-center gap-2 pb-3.5 border-b border-border/60">
                 <Sprout className="h-4.5 w-4.5 text-[#168447]" />
                 <h3 className="font-display text-sm font-bold text-foreground">
-                  AI Crop Recommendation
+                  {t.dashboard.page.aiCropRecommendation}
                 </h3>
               </div>
 
@@ -471,7 +492,7 @@ export default function DashboardPage() {
                 <div className="mt-8 flex flex-col items-center justify-center space-y-3">
                   <Loader2 className="h-8 w-8 animate-spin text-muted-foreground/40" />
                   <p className="text-sm font-medium text-muted-foreground">
-                    Loading AI insights...
+                    {t.dashboard.page.loadingInsights}
                   </p>
                 </div>
               ) : data?.cropRecommendation ? (
@@ -487,7 +508,7 @@ export default function DashboardPage() {
                     </div>
                     <div className="mt-2.5">
                       <span className="text-[10px] font-semibold text-muted-foreground">
-                        Best Crop for Your Farm
+                        {t.dashboard.page.bestCropForFarm}
                       </span>
                       <div className="flex items-center justify-between mt-0.5">
                         <h4 className="font-display text-base font-extrabold text-foreground capitalize">
@@ -497,13 +518,13 @@ export default function DashboardPage() {
                           {Math.round(
                             data.cropRecommendation.confidence_score * 100,
                           )}
-                          % Suitability
+                          % {t.dashboard.page.suitability}
                         </span>
                       </div>
                       <p className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground">
-                        Based on your soil, weather, season, and market trends,
-                        {data.cropRecommendation.recommended_crop} is the best
-                        crop choice for maximum yield and profit.
+                        {t.dashboard.page.basedOnSoil},{" "}
+                        {data.cropRecommendation.recommended_crop}{" "}
+                        {t.dashboard.page.isTheBest}
                       </p>
                     </div>
                   </div>
@@ -516,27 +537,27 @@ export default function DashboardPage() {
                     <div className="space-y-1.5 text-[11px] text-muted-foreground font-medium">
                       <div className="flex items-center gap-1.5">
                         <Check className="h-3.5 w-3.5 text-[#168447] shrink-0" />
-                        <span>Suitable soil conditions</span>
+                        <span>{t.dashboard.page.suitableConditions}</span>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <Check className="h-3.5 w-3.5 text-[#168447] shrink-0" />
-                        <span>Optimal temperature range</span>
+                        <span>{t.dashboard.page.optimalTemp}</span>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <Check className="h-3.5 w-3.5 text-[#168447] shrink-0" />
-                        <span>Expected rainfall is good</span>
+                        <span>{t.dashboard.page.goodRainfall}</span>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <Check className="h-3.5 w-3.5 text-[#168447] shrink-0" />
-                        <span>High market demand</span>
+                        <span>{t.dashboard.page.highMarketDemand}</span>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <Check className="h-3.5 w-3.5 text-[#168447] shrink-0" />
-                        <span>Higher profitability</span>
+                        <span>{t.dashboard.page.higherProfitability}</span>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <Check className="h-3.5 w-3.5 text-[#168447] shrink-0" />
-                        <span>Low disease risk</span>
+                        <span>{t.dashboard.page.lowDiseaseRisk}</span>
                       </div>
                     </div>
                   </div>
@@ -546,10 +567,10 @@ export default function DashboardPage() {
                   <Bot className="h-8 w-8 text-muted-foreground/40" />
                   <div>
                     <p className="text-sm font-bold text-foreground">
-                      No Recommendation Available
+                      {t.dashboard.page.noRecommendation}
                     </p>
                     <p className="mt-1 text-[11px] text-muted-foreground">
-                      Complete soil information to generate crop recommendation.
+                      {t.dashboard.page.completeSoilInfo}
                     </p>
                   </div>
                 </div>
@@ -561,7 +582,7 @@ export default function DashboardPage() {
                 href="/crop-intelligence"
                 className="inline-flex items-center gap-1.5 rounded-xl bg-[#168447] px-4 py-2 text-xs font-bold text-white shadow-sm transition-all hover:bg-[#14743e]"
               >
-                <span>View Full Recommendation</span>
+                <span>{t.dashboard.page.viewFullRecommendation}</span>
                 <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>
@@ -581,13 +602,13 @@ export default function DashboardPage() {
               <div className="flex items-center justify-between pb-2.5 border-b border-blue-200/50">
                 <div className="flex items-center gap-1.5 text-xs font-bold text-foreground">
                   <CloudRain className="h-4 w-4 text-blue-600" />
-                  <span>Weather Alert</span>
+                  <span>{t.dashboard.page.weatherAlert}</span>
                 </div>
                 <Link
                   href="/weather-climate"
                   className="text-[10px] font-semibold text-blue-600 hover:underline dark:text-blue-400"
                 >
-                  View Details
+                  {t.dashboard.page.viewDetails}
                 </Link>
               </div>
 
@@ -599,19 +620,19 @@ export default function DashboardPage() {
                 <div className="mt-3 flex items-start justify-between gap-3">
                   <div className="space-y-1">
                     <h4 className="text-xs font-bold text-foreground leading-snug">
-                      Heavy rainfall expected in the next 48 hours.
+                      {t.dashboard.page.heavyRainfallAlert}
                     </h4>
                     <p className="text-[11px] text-muted-foreground">
                       <strong className="text-foreground">
-                        Recommended Action:
+                        {t.dashboard.page.recommendedAction}
                       </strong>{" "}
-                      Avoid irrigation and postpone fertilizer application.
+                      {t.dashboard.page.avoidIrrigation}
                     </p>
                     <Link
                       href="/weather-climate"
                       className="inline-flex items-center gap-1 text-[10px] font-bold text-blue-600 hover:underline pt-1 dark:text-blue-400"
                     >
-                      <span>View Details</span>
+                      <span>{t.dashboard.page.viewDetails}</span>
                       <ArrowRight className="h-2.5 w-2.5" />
                     </Link>
                   </div>
@@ -661,7 +682,7 @@ export default function DashboardPage() {
               ) : (
                 <div className="mt-4 flex items-center justify-center p-4">
                   <span className="text-[11px] font-medium text-blue-600/70 dark:text-blue-400/70">
-                    No active weather alerts
+                    {t.dashboard.page.noWeatherAlerts}
                   </span>
                 </div>
               )}
@@ -677,13 +698,13 @@ export default function DashboardPage() {
               <div className="flex items-center justify-between pb-2.5 border-b border-border/60">
                 <div className="flex items-center gap-1.5 text-xs font-bold text-foreground">
                   <TrendingUp className="h-4 w-4 text-[#168447]" />
-                  <span>Market Prices</span>
+                  <span>{t.dashboard.page.marketPrices}</span>
                 </div>
                 <Link
                   href="/market-finance"
                   className="text-[10px] font-semibold text-[#168447] hover:underline"
                 >
-                  View All
+                  {t.dashboard.page.viewAll}
                 </Link>
               </div>
 
@@ -696,15 +717,17 @@ export default function DashboardPage() {
                   <table className="w-full text-xs">
                     <thead>
                       <tr className="text-muted-foreground text-[10px] border-b border-border/40">
-                        <th className="pb-1.5 text-left font-semibold">Crop</th>
                         <th className="pb-1.5 text-left font-semibold">
-                          Market
+                          {t.dashboard.page.crop}
+                        </th>
+                        <th className="pb-1.5 text-left font-semibold">
+                          {t.dashboard.page.market}
                         </th>
                         <th className="pb-1.5 text-right font-semibold">
-                          Price / Qtl
+                          {t.dashboard.page.pricePerQtl}
                         </th>
                         <th className="pb-1.5 text-right font-semibold">
-                          Change
+                          {t.dashboard.page.change}
                         </th>
                       </tr>
                     </thead>
@@ -737,7 +760,7 @@ export default function DashboardPage() {
                 ) : (
                   <div className="flex items-center justify-center py-6">
                     <span className="text-[11px] font-medium text-muted-foreground">
-                      Market data temporarily unavailable
+                      {t.dashboard.page.marketUnavailable}
                     </span>
                   </div>
                 )}
@@ -759,14 +782,9 @@ export default function DashboardPage() {
               <div className="flex items-center justify-between pb-2.5 border-b border-border/60">
                 <div className="flex items-center gap-1.5 text-xs font-bold text-foreground">
                   <Sprout className="h-4 w-4 text-[#168447]" />
-                  <span>Today's Tasks</span>
+                  <span>{t.dashboard.page.todaysTasks}</span>
                 </div>
-                <Link
-                  href="/farm-planning#tasks"
-                  className="text-[10px] font-semibold text-[#168447] hover:underline"
-                >
-                  View All
-                </Link>
+
               </div>
 
               <div className="mt-2.5 space-y-2 text-xs">
@@ -798,7 +816,7 @@ export default function DashboardPage() {
                 ) : (
                   <div className="flex items-center justify-center py-6">
                     <span className="text-[11px] font-medium text-muted-foreground">
-                      No upcoming tasks
+                      {t.dashboard.page.noUpcomingTasks}
                     </span>
                   </div>
                 )}
@@ -815,13 +833,13 @@ export default function DashboardPage() {
               <div className="flex items-center justify-between pb-2.5 border-b border-border/60">
                 <div className="flex items-center gap-1.5 text-xs font-bold text-foreground">
                   <Bell className="h-4 w-4 text-[#168447]" />
-                  <span>Smart Notifications</span>
+                  <span>{t.dashboard.page.smartNotifications}</span>
                 </div>
                 <Link
                   href="/weather-climate#alerts"
                   className="text-[10px] font-semibold text-[#168447] hover:underline"
                 >
-                  View All
+                  {t.dashboard.page.viewAll}
                 </Link>
               </div>
 
@@ -854,7 +872,7 @@ export default function DashboardPage() {
                 ) : (
                   <div className="flex items-center justify-center py-6">
                     <span className="text-[11px] font-medium text-muted-foreground">
-                      No new notifications
+                      {t.dashboard.page.noNotifications}
                     </span>
                   </div>
                 )}
@@ -875,7 +893,7 @@ export default function DashboardPage() {
             className="flex flex-col justify-between rounded-2xl border border-border/80 bg-card p-5 shadow-xs lg:col-span-7"
           >
             <h3 className="font-display text-sm font-bold text-foreground pb-3 border-b border-border/60">
-              Farm Overview
+              {t.dashboard.page.farmOverview}
             </h3>
 
             {isLoading ? (
@@ -887,25 +905,25 @@ export default function DashboardPage() {
                 {/* 1. Total Area */}
                 <div>
                   <span className="block text-[10px] text-muted-foreground">
-                    Total Area
+                    {t.dashboard.page.totalArea}
                   </span>
                   <span className="font-display text-sm font-black text-foreground">
-                    {data.profile.farm_area || "N/A"} Acres
+                    {data.profile.farm_area || "N/A"} {t.dashboard.page.acres}
                   </span>
                 </div>
                 {/* 2. Current Crop */}
                 <div>
                   <span className="block text-[10px] text-muted-foreground">
-                    Current Crop
+                    {t.dashboard.page.currentCrop}
                   </span>
                   <span className="font-display text-sm font-black text-foreground">
-                    {data.profile.current_crop || "None"}
+                    {data.profile.current_crop || t.dashboard.page.none}
                   </span>
                 </div>
                 {/* 3. Crop Stage */}
                 <div>
                   <span className="block text-[10px] text-muted-foreground">
-                    Crop Stage
+                    {t.dashboard.page.cropStage}
                   </span>
                   <span className="font-display text-sm font-black text-foreground">
                     {data.profile.crop_stage || "N/A"}
@@ -914,7 +932,7 @@ export default function DashboardPage() {
                 {/* 4. Expected Harvest */}
                 <div>
                   <span className="block text-[10px] text-muted-foreground">
-                    Expected Harvest
+                    {t.dashboard.page.expectedHarvest}
                   </span>
                   <span className="font-display text-xs font-bold text-foreground">
                     {data.profile.expected_harvest_date
@@ -931,17 +949,17 @@ export default function DashboardPage() {
                 {/* 5. Irrigation Status */}
                 <div>
                   <span className="block text-[10px] text-muted-foreground">
-                    Irrigation Status
+                    {t.dashboard.page.irrigationStatus}
                   </span>
                   <span className="font-display text-sm font-bold text-[#16a34a]">
-                    Good
+                    {t.dashboard.page.irrigationGood}
                   </span>
                 </div>
               </div>
             ) : (
               <div className="mt-4 flex items-center justify-center py-4">
                 <span className="text-[11px] font-medium text-muted-foreground">
-                  Complete your profile to view farm overview
+                  {t.dashboard.page.completeProfile}
                 </span>
               </div>
             )}
@@ -955,7 +973,7 @@ export default function DashboardPage() {
             className="flex flex-col justify-between rounded-2xl border border-border/80 bg-card p-5 shadow-xs lg:col-span-5"
           >
             <h3 className="font-display text-sm font-bold text-foreground pb-3 border-b border-border/60">
-              Quick Actions
+              {t.dashboard.page.quickActions}
             </h3>
 
             <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-6 text-center">
@@ -968,7 +986,7 @@ export default function DashboardPage() {
                   <Sprout className="h-3.5 w-3.5" />
                 </div>
                 <span className="text-[9px] font-bold text-foreground leading-tight">
-                  Crop Rec
+                  {t.dashboard.page.cropRec}
                 </span>
               </Link>
 
@@ -981,7 +999,7 @@ export default function DashboardPage() {
                   <FlaskConical className="h-3.5 w-3.5" />
                 </div>
                 <span className="text-[9px] font-bold text-foreground leading-tight">
-                  Soil Test
+                  {t.dashboard.page.soilTest}
                 </span>
               </Link>
 
@@ -994,7 +1012,7 @@ export default function DashboardPage() {
                   <Stethoscope className="h-3.5 w-3.5" />
                 </div>
                 <span className="text-[9px] font-bold text-foreground leading-tight">
-                  Disease
+                  {t.dashboard.page.disease}
                 </span>
               </Link>
 
@@ -1007,7 +1025,7 @@ export default function DashboardPage() {
                   <BarChart3 className="h-3.5 w-3.5" />
                 </div>
                 <span className="text-[9px] font-bold text-foreground leading-tight">
-                  Market
+                  {t.dashboard.page.market}
                 </span>
               </Link>
 
@@ -1020,20 +1038,20 @@ export default function DashboardPage() {
                   <Bot className="h-3.5 w-3.5" />
                 </div>
                 <span className="text-[9px] font-bold text-foreground leading-tight">
-                  AI Chat
+                  {t.dashboard.page.aiChat}
                 </span>
               </Link>
 
               {/* Action 6 */}
               <Link
-                href="/ai-assistant"
-                className="flex flex-col items-center justify-center rounded-xl border border-border/70 bg-background p-2 hover:border-blue-500 hover:bg-accent transition-all"
+                href="/government-resources"
+                className="flex flex-col items-center justify-center rounded-xl border border-border/70 bg-background p-2 hover:border-emerald-500 hover:bg-accent transition-all"
               >
-                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-100 text-blue-700 mb-1">
-                  <Mic className="h-3.5 w-3.5" />
+                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-100 text-[#168447] mb-1">
+                  <Landmark className="h-3.5 w-3.5" />
                 </div>
                 <span className="text-[9px] font-bold text-foreground leading-tight">
-                  Voice
+                  {t.dashboard.page.govtResources || "Schemes"}
                 </span>
               </Link>
             </div>
@@ -1045,13 +1063,13 @@ export default function DashboardPage() {
         {/* ======================================================== */}
         <div className="flex items-center justify-center gap-2 pt-2 text-center text-xs text-muted-foreground font-medium">
           <Sprout className="h-4 w-4 text-[#168447]" />
-          <span>Empowering Farmers with AI</span>
+          <span>{t.dashboard.page.empoweringFarmers}</span>
           <span>•</span>
-          <span>Data-Driven Decisions</span>
+          <span>{t.dashboard.page.dataDriven}</span>
           <span>•</span>
-          <span>Better Yield</span>
+          <span>{t.dashboard.page.betterYield}</span>
           <span>•</span>
-          <span>Higher Profit</span>
+          <span>{t.dashboard.page.higherProfit}</span>
         </div>
       </div>
     </DashboardShell>

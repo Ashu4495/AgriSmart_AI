@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
+import Link from "next/link";
 import { DashboardShell } from "@/components/dashboard/shell";
 import {
   Sprout,
@@ -128,10 +129,7 @@ export default function GovernmentResourcesPage() {
   const [landHolding, setLandHolding] = useState("2 - 5 Acres (Small)");
   const [annualIncome, setAnnualIncome] = useState("₹1.5 - ₹3 Lakh");
   const [ageVal, setAgeVal] = useState("38 yrs (Adult Farmer)");
-  const [selectedInterests, setSelectedInterests] = useState<string[]>([
-    "Financial Assistance",
-    "Crop Insurance",
-  ]);
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
 
   // Schemes Data & Recommendation Engine State
   const [schemes, setSchemes] = useState<SchemeMatch[]>([]);
@@ -141,7 +139,8 @@ export default function GovernmentResourcesPage() {
   const [possiblyEligibleCount, setPossiblyEligibleCount] = useState<number>(0);
   const [stateCount, setStateCount] = useState<number>(0);
   const [centralCount, setCentralCount] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [hasSearched, setHasSearched] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   // Scheme Modals State
@@ -155,6 +154,7 @@ export default function GovernmentResourcesPage() {
   const [knowledgeLoading, setKnowledgeLoading] = useState<boolean>(true);
   const [knowledgeError, setKnowledgeError] = useState<string | null>(null);
   const [knowledgeCategory, setKnowledgeCategory] = useState<string>("All");
+  const [knowledgeType, setKnowledgeType] = useState<string>("All");
   const [knowledgeSearch, setKnowledgeSearch] = useState<string>("");
   const [selectedKnowledge, setSelectedKnowledge] = useState<KnowledgeResource | null>(null);
   const [showAllKnowledgeModal, setShowAllKnowledgeModal] = useState<boolean>(false);
@@ -272,7 +272,7 @@ export default function GovernmentResourcesPage() {
         setKnowledgeLoading(false);
       }
     },
-    [knowledgeCategory, knowledgeSearch, stateVal, farmingType]
+    [knowledgeCategory, knowledgeType, knowledgeSearch, stateVal, farmingType]
   );
 
   // Fetch live advisories & government announcements (Step 6)
@@ -303,10 +303,7 @@ export default function GovernmentResourcesPage() {
     [stateVal, farmingType]
   );
 
-  // Initial load & profile changes
-  useEffect(() => {
-    fetchSchemes(false);
-  }, [fetchSchemes]);
+  // NOTE: schemes are NOT fetched on mount — only on "Find Schemes" click
 
   useEffect(() => {
     fetchKnowledge();
@@ -318,6 +315,7 @@ export default function GovernmentResourcesPage() {
 
   // Find schemes button click
   const handleFindSchemes = () => {
+    setHasSearched(true);
     fetchSchemes(true);
     fetchKnowledge();
     fetchAdvisories();
@@ -331,7 +329,13 @@ export default function GovernmentResourcesPage() {
     setLandHolding("2 - 5 Acres (Small)");
     setAnnualIncome("₹1.5 - ₹3 Lakh");
     setAgeVal("38 yrs (Adult Farmer)");
-    setSelectedInterests(["Financial Assistance", "Crop Insurance"]);
+    setSelectedInterests([]);
+    setHasSearched(false);
+    setSchemes([]);
+    setTopSchemes([]);
+    setTotalCount(0);
+    setEligibleCount(0);
+    setPossiblyEligibleCount(0);
     setKnowledgeCategory("All");
     setKnowledgeSearch("");
     toast.info("Farmer profile and knowledge search reset to default");
@@ -420,10 +424,7 @@ export default function GovernmentResourcesPage() {
   };
 
   return (
-    <DashboardShell
-      headerTitle="Government & Resources"
-      headerSubtitle="Find personalized government schemes and agricultural knowledge tailored to your farm profile."
-    >
+    <DashboardShell>
       <div className="space-y-5 pb-6">
         {/* ======================================================== */}
         {/* 1. TOP INFORMATION BANNER                                */}
@@ -450,77 +451,10 @@ export default function GovernmentResourcesPage() {
               </div>
             </div>
 
-            {/* Right Status Badge */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
-              <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-300 bg-white/80 dark:bg-background/80 px-3 py-1 text-xs font-semibold text-emerald-800 dark:text-emerald-300 shadow-2xs">
-                <Radio className="h-3 w-3 text-emerald-600 animate-pulse" />
-                <span>Live Status Verified</span>
-              </div>
-              <div className="text-[10px] text-muted-foreground">
-                Last updated: <span className="font-semibold text-foreground">{lastUpdatedDate}</span>
-              </div>
-            </div>
           </div>
         </motion.div>
 
-        {/* ======================================================== */}
-        {/* 2. LIVE GOVERNMENT ADVISORIES & ANNOUNCEMENTS TICKER      */}
-        {/* ======================================================== */}
-        {advisories.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="rounded-2xl border border-border/80 bg-card p-4 shadow-2xs"
-          >
-            <div className="flex items-center justify-between gap-2 pb-2.5 border-b border-border/60">
-              <div className="flex items-center gap-2">
-                <BellRing className="h-4 w-4 text-[#168447]" />
-                <h3 className="text-xs font-bold text-foreground">
-                  Official Advisories & State Announcements ({stateVal})
-                </h3>
-              </div>
-              <span className="text-[10px] font-medium text-muted-foreground">
-                Source: {officialDataSource}
-              </span>
-            </div>
 
-            <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
-              {advisories.slice(0, 2).map((adv) => (
-                <div
-                  key={adv.id}
-                  className={`rounded-xl border p-3 text-xs space-y-1.5 transition-all ${
-                    adv.severity === "warning"
-                      ? "border-amber-200 bg-amber-50/70 dark:bg-amber-950/30 dark:border-amber-900/40"
-                      : "border-emerald-200 bg-emerald-50/70 dark:bg-emerald-950/30 dark:border-emerald-900/40"
-                  }`}
-                >
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="font-bold text-foreground line-clamp-1">
-                      {adv.title}
-                    </span>
-                    <span className={`shrink-0 rounded-full px-2 py-0.2 text-[9px] font-bold ${
-                      adv.severity === "warning"
-                        ? "bg-amber-200 text-amber-900 dark:bg-amber-900 dark:text-amber-200"
-                        : "bg-emerald-200 text-emerald-900 dark:bg-emerald-900 dark:text-emerald-200"
-                    }`}>
-                      {adv.category}
-                    </span>
-                  </div>
-
-                  <p className="text-[11px] text-muted-foreground leading-relaxed line-clamp-2">
-                    {adv.description}
-                  </p>
-
-                  <div className="flex items-center justify-between text-[10px] pt-1 text-muted-foreground border-t border-border/40">
-                    <span>{adv.source}</span>
-                    <span>{adv.publishedAt}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        )}
 
         {/* ======================================================== */}
         {/* 3. MAIN CONTENT 2-COLUMN GRID                            */}
@@ -545,9 +479,11 @@ export default function GovernmentResourcesPage() {
                     Adjust options to personalize scheme ranking in real-time
                   </p>
                 </div>
+                {hasSearched && (
                 <span className="text-[11px] font-bold text-[#168447] bg-[#dcfce7] px-2.5 py-0.5 rounded-full">
                   {eligibleCount} 🟢 Eligible
                 </span>
+                )}
               </div>
 
               {/* 6 Profile Selectors Grid */}
@@ -720,6 +656,26 @@ export default function GovernmentResourcesPage() {
           {/* -------------------------------------------------------- */}
           {/* CARD 2: TOP RECOMMENDED SCHEMES (Top-Right 6 Cols)       */}
           {/* -------------------------------------------------------- */}
+          {!hasSearched ? (
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: 0.1 }}
+              className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border/80 bg-card p-8 shadow-xs lg:col-span-6 text-center gap-3"
+            >
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600">
+                <Search className="h-7 w-7" />
+              </div>
+              <h3 className="text-sm font-bold text-foreground">
+                No Schemes Loaded Yet
+              </h3>
+              <p className="text-xs text-muted-foreground max-w-xs leading-relaxed">
+                Set your farmer profile preferences on the left, then click{" "}
+                <span className="font-bold text-[#168447]">&quot;Find Schemes&quot;</span>{" "}
+                to see personalized government scheme recommendations.
+              </p>
+            </motion.div>
+          ) : (
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -879,6 +835,7 @@ export default function GovernmentResourcesPage() {
               <ArrowRight className="h-3 w-3" />
             </button>
           </motion.div>
+          )}
 
           {/* -------------------------------------------------------- */}
           {/* CARD 3: DYNAMIC KNOWLEDGE HUB (Full Width 12 Cols)        */}
@@ -948,6 +905,34 @@ export default function GovernmentResourcesPage() {
                   })}
                 </div>
 
+                {/* Resource Type Pills */}
+                <div className="flex flex-wrap items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
+                  {[
+                    "All",
+                    "PDF",
+                    "WEBSITE",
+                    "ARTICLE",
+                    "VIDEO",
+                    "GUIDE",
+                  ].map((type) => {
+                    const isSelected = knowledgeType === type;
+                    return (
+                      <button
+                        key={type}
+                        type="button"
+                        onClick={() => setKnowledgeType(type)}
+                        className={`rounded-full px-3 py-1 text-[11px] font-semibold transition-colors cursor-pointer whitespace-nowrap ${
+                          isSelected
+                            ? "bg-[#0284c7] text-white shadow-2xs"
+                            : "border border-border/80 bg-card text-muted-foreground hover:text-foreground hover:bg-accent"
+                        }`}
+                      >
+                        {type}
+                      </button>
+                    );
+                  })}
+                </div>
+
                 {/* Search Bar */}
                 <div className="relative min-w-[240px] md:w-72">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
@@ -1012,6 +997,7 @@ export default function GovernmentResourcesPage() {
                     type="button"
                     onClick={() => {
                       setKnowledgeCategory("All");
+                      setKnowledgeType("All");
                       setKnowledgeSearch("");
                     }}
                     className="mt-3 text-xs font-bold text-[#168447] hover:underline cursor-pointer"
@@ -1029,11 +1015,17 @@ export default function GovernmentResourcesPage() {
                       <div>
                         {/* Image with Tag badge and play icon */}
                         <div className="relative h-28 w-full overflow-hidden bg-muted">
-                          <img
-                            src={item.image}
-                            alt={item.title}
-                            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                          />
+                          {item.thumbnail_url || item.image ? (
+                            <img
+                              src={item.thumbnail_url || item.image}
+                              alt={item.title}
+                              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            />
+                          ) : (
+                            <div className="h-full w-full bg-[#eaf7ee] flex items-center justify-center text-[#168447]">
+                              <BookOpen className="h-8 w-8 opacity-50" />
+                            </div>
+                          )}
                           <span
                             className={`absolute top-2 left-2 rounded-full px-2 py-0.5 text-[9px] font-bold text-white shadow-xs ${item.categoryBg || "bg-[#168447]"}`}
                           >
@@ -1042,10 +1034,10 @@ export default function GovernmentResourcesPage() {
 
                           {/* State or Crop Pill */}
                           <span className="absolute top-2 right-2 rounded-full bg-black/60 backdrop-blur-xs px-2 py-0.5 text-[9px] font-semibold text-white">
-                            {item.crop !== "General" ? item.crop : item.state !== "ALL" ? item.state : "Pan-India"}
+                            {item.resource_type}
                           </span>
 
-                          {item.is_video && (
+                          {item.resource_type === 'VIDEO' && (
                             <div className="absolute inset-0 flex items-center justify-center bg-black/25">
                               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-foreground shadow-sm">
                                 <Play className="h-3.5 w-3.5 fill-current ml-0.5" />
@@ -1057,7 +1049,13 @@ export default function GovernmentResourcesPage() {
                         {/* Content */}
                         <div className="p-3">
                           <div className="flex items-center gap-1 text-[10px] text-muted-foreground mb-1">
-                            <span>{item.source}</span>
+                            <span>{item.source_name || item.source}</span>
+                            {item.is_verified && (
+                              <span className="flex items-center gap-0.5 text-[#168447] ml-1 font-semibold">
+                                <CheckCircle2 className="h-2.5 w-2.5" />
+                                <span>Verified Source</span>
+                              </span>
+                            )}
                           </div>
                           <h3 className="text-xs font-bold text-foreground leading-snug line-clamp-2 group-hover:text-[#168447] transition-colors">
                             {item.title}
@@ -1070,17 +1068,23 @@ export default function GovernmentResourcesPage() {
 
                       {/* Footer with read time, action & bookmark */}
                       <div className="flex items-center justify-between p-3 pt-0 border-t border-border/40 text-[10px] text-muted-foreground">
-                        <span>{item.read_time}</span>
+                        <span>{item.page_count ? `${item.page_count} pages` : item.duration ? item.duration : 'Resource'}</span>
 
                         <div className="flex items-center gap-2">
-                          <button
-                            type="button"
-                            onClick={() => setSelectedKnowledge(item)}
+                          <Link
+                            href={`/knowledge/${item.id}`}
                             className="inline-flex items-center gap-1 text-[11px] font-bold text-[#168447] hover:underline cursor-pointer"
                           >
-                            <span>{item.is_video ? "Watch Video" : "Read Guide"}</span>
+                            <span>
+                              {item.resource_type === 'PDF' ? "Open PDF" : 
+                               item.resource_type === 'WEBSITE' ? "Visit Website" :
+                               item.resource_type === 'VIDEO' ? "Watch Video" :
+                               item.resource_type === 'ARTICLE' ? "Read Article" :
+                               item.resource_type === 'GOVERNMENT_DOCUMENT' ? "View Document" :
+                               "Read Guide"}
+                            </span>
                             <ArrowRight className="h-3 w-3" />
-                          </button>
+                          </Link>
 
                           <button
                             type="button"

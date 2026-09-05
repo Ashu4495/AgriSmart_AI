@@ -164,12 +164,14 @@ async function runPythonClimateRiskBridge(
     const projectRoot = process.cwd();
     const isWindows = process.platform === "win32";
     const venvPython = isWindows
-      ? path.join(projectRoot, "Crop_Recom_Model", ".venv", "Scripts", "python.exe")
-      : path.join(projectRoot, "Crop_Recom_Model", ".venv", "bin", "python");
+      ? path.join(projectRoot, "backend", "ml", "crop_recommendation", ".venv", "Scripts", "python.exe")
+      : path.join(projectRoot, "backend", "ml", "crop_recommendation", ".venv", "bin", "python");
 
     const scriptPath = path.join(
       projectRoot,
-      "Climate Risk_model",
+      "backend",
+      "ml",
+      "climate_risk",
       "predict_bridge.py",
     );
 

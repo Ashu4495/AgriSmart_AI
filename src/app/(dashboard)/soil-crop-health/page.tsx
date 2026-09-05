@@ -215,10 +215,7 @@ export default function SoilCropHealthPage() {
   }
 
   return (
-    <DashboardShell
-      headerTitle="Soil & Crop Health"
-      headerSubtitle="Monitor soil, detect diseases and get smart recommendations for healthy crops."
-    >
+    <DashboardShell>
       <div className="space-y-6 pb-8">
         {/* ======================================================== */}
         {/* 1. PAGE TABS                                             */}

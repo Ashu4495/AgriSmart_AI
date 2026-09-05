@@ -1326,3 +1326,15 @@ export function getSavedRecommendationHistory(): RecommendationHistoryItem[] {
     },
   ];
 }
+
+/**
+ * Clears recommendation history from local storage
+ */
+export function clearSavedRecommendationHistory(): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.removeItem("agrismart_recommendation_history");
+  } catch {
+    // Ignore error
+  }
+}

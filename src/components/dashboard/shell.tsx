@@ -45,62 +45,59 @@ export interface NavItem {
   icon: React.ComponentType<{ className?: string }>;
 }
 
-export const NEW_SIDEBAR_ITEMS: NavItem[] = [
-  {
-    id: "dashboard",
-    label: "Dashboard",
-    href: "/dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    id: "crop-intelligence",
-    label: "Crop Intelligence",
-    href: "/crop-intelligence",
-    icon: Sprout,
-  },
-  {
-    id: "weather-climate",
-    label: "Weather & Climate",
-    href: "/weather-climate",
-    icon: CloudSun,
-  },
-  {
-    id: "soil-crop-health",
-    label: "Soil & Crop Health",
-    href: "/soil-crop-health",
-    icon: FlaskConical,
-  },
-  {
-    id: "farm-planning",
-    label: "Farm Planning",
-    href: "/farm-planning",
-    icon: ClipboardList,
-  },
-  {
-    id: "market-finance",
-    label: "Market & Finance",
-    href: "/market-finance",
-    icon: TrendingUp,
-  },
-  {
-    id: "government-resources",
-    label: "Government & Resources",
-    href: "/government-resources",
-    icon: Landmark,
-  },
-  {
-    id: "ai-assistant",
-    label: "AI Assistant",
-    href: "/ai-assistant",
-    icon: Bot,
-  },
-  {
-    id: "settings",
-    label: "Settings",
-    href: "/settings",
-    icon: Settings,
-  },
-];
+export function getSidebarItems(t: ReturnType<typeof useLanguage>["t"]): NavItem[] {
+  return [
+    {
+      id: "dashboard",
+      label: t.dashboard.page.dashboard,
+      href: "/dashboard",
+      icon: LayoutDashboard,
+    },
+    {
+      id: "crop-intelligence",
+      label: t.dashboard.page.cropIntelligence,
+      href: "/crop-intelligence",
+      icon: Sprout,
+    },
+    {
+      id: "weather-climate",
+      label: t.dashboard.page.weatherClimate,
+      href: "/weather-climate",
+      icon: CloudSun,
+    },
+    {
+      id: "soil-crop-health",
+      label: t.dashboard.page.soilCropHealth,
+      href: "/soil-crop-health",
+      icon: FlaskConical,
+    },
+
+    {
+      id: "market-finance",
+      label: t.dashboard.page.marketFinance,
+      href: "/market-finance",
+      icon: TrendingUp,
+    },
+    {
+      id: "government-resources",
+      label: t.dashboard.page.govtResources,
+      href: "/government-resources",
+      icon: Landmark,
+    },
+    {
+      id: "ai-assistant",
+      label: t.dashboard.page.aiAssistant,
+      href: "/ai-assistant",
+      icon: Bot,
+    },
+    {
+      id: "settings",
+      label: t.dashboard.page.settings,
+      href: "/settings",
+      icon: Settings,
+    },
+  ];
+}
 
 function SidebarNav({
   onNavigate,
@@ -110,10 +107,12 @@ function SidebarNav({
   onSignOut: () => void;
 }) {
   const pathname = usePathname();
+  const { t } = useLanguage();
+  const sidebarItems = getSidebarItems(t);
 
   return (
     <nav className="flex-1 space-y-1 px-3" aria-label="Main Navigation">
-      {NEW_SIDEBAR_ITEMS.map((item) => {
+      {sidebarItems.map((item) => {
         const isExactActive = pathname === item.href;
         const isChildActive =
           pathname.startsWith(item.href + "/") ||
@@ -161,7 +160,7 @@ function SidebarNav({
           className="flex min-h-[44px] w-full items-center gap-3.5 rounded-xl px-3.5 py-2.5 text-sm font-medium text-rose-400 transition-all duration-200 hover:bg-rose-500/10 hover:text-rose-300 cursor-pointer"
         >
           <LogOut className="h-5 w-5 shrink-0 text-rose-400" />
-          <span className="truncate">Logout</span>
+          <span className="truncate">{t.dashboard.page.logout}</span>
         </button>
       </div>
     </nav>
@@ -169,6 +168,8 @@ function SidebarNav({
 }
 
 function SidebarExtras() {
+  const { t } = useLanguage();
+
   return (
     <div className="space-y-3 p-3 pt-2">
       {/* Upgrade to Pro Card */}
@@ -178,20 +179,19 @@ function SidebarExtras() {
             <Crown className="h-3.5 w-3.5" />
           </div>
           <span className="font-display text-xs font-bold text-white tracking-tight">
-            Upgrade to Pro
+            {t.dashboard.page.upgradeToPro}
           </span>
         </div>
 
         <p className="mt-2 text-[11px] leading-relaxed text-emerald-100/75">
-          Get advanced weather alerts, climate risk insights and priority
-          support.
+          {t.dashboard.page.upgradeDesc}
         </p>
 
         <Link
           href="/ai-assistant"
           className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-[#168447] px-3 py-2 text-xs font-bold text-white shadow-sm transition-transform hover:scale-[1.02] hover:bg-[#14743e]"
         >
-          <span>Upgrade Now →</span>
+          <span>{t.dashboard.page.upgradeNow}</span>
         </Link>
       </div>
 
@@ -209,24 +209,60 @@ function SidebarExtras() {
   );
 }
 
-const ROUTE_HEADER_TITLES: { prefix: string; title: string }[] = [
-  { prefix: "/crop-intelligence", title: "Crop Intelligence" },
-  { prefix: "/crop-recommendation", title: "Crop Intelligence" },
-  { prefix: "/weather-climate", title: "Weather & Climate" },
-  { prefix: "/soil-crop-health", title: "Soil & Crop Health" },
-  { prefix: "/farm-planning", title: "Farm Planning" },
-  { prefix: "/market-finance", title: "Market & Finance" },
-  { prefix: "/government-resources", title: "Government & Resources" },
-  { prefix: "/ai-assistant", title: "AI Assistant" },
-  { prefix: "/settings", title: "Settings" },
-  { prefix: "/profile", title: "Settings" },
-];
+function getHeaderInfo(
+  pathname: string,
+  t: ReturnType<typeof useLanguage>["t"],
+): { title: string; subtitle: string } {
+  if (
+    pathname.startsWith("/crop-intelligence") ||
+    pathname.startsWith("/crop-recommendation")
+  ) {
+    return {
+      title: t.dashboard.page.cropIntelligence,
+      subtitle: t.dashboard.subtitles.cropIntelligence,
+    };
+  }
+  if (pathname.startsWith("/weather-climate")) {
+    return {
+      title: t.dashboard.page.weatherClimate,
+      subtitle: t.dashboard.subtitles.weatherClimate,
+    };
+  }
+  if (pathname.startsWith("/soil-crop-health")) {
+    return {
+      title: t.dashboard.page.soilCropHealth,
+      subtitle: t.dashboard.subtitles.soilCropHealth,
+    };
+  }
 
-function getHeaderTitle(pathname: string): string {
-  return (
-    ROUTE_HEADER_TITLES.find((route) => pathname.startsWith(route.prefix))
-      ?.title ?? "Dashboard"
-  );
+  if (pathname.startsWith("/market-finance")) {
+    return {
+      title: t.dashboard.page.marketFinance,
+      subtitle: t.dashboard.subtitles.marketFinance,
+    };
+  }
+  if (pathname.startsWith("/government-resources")) {
+    return {
+      title: t.dashboard.page.govtResources,
+      subtitle: t.dashboard.subtitles.govtResources,
+    };
+  }
+  if (pathname.startsWith("/ai-assistant")) {
+    return {
+      title: t.dashboard.page.aiAssistant,
+      subtitle: t.dashboard.subtitles.aiAssistant,
+    };
+  }
+  if (pathname.startsWith("/settings") || pathname.startsWith("/profile")) {
+    return {
+      title: t.dashboard.page.settings,
+      subtitle: t.dashboard.subtitles.settings,
+    };
+  }
+  return {
+    title: t.dashboard.page.dashboard,
+    subtitle: t.dashboard.subtitles.dashboard,
+  };
 }
 
 export function DashboardShell({
@@ -245,14 +281,16 @@ export function DashboardShell({
   const pathname = usePathname();
   const { user, displayName, avatarUrl, handleSignOut } = useAccount();
   const { theme, toggle: toggleTheme } = useTheme();
-  const { lang, setLang } = useLanguage();
+  const { lang, setLang, t } = useLanguage();
 
   const [navOpen, setNavOpen] = useState(false);
   const closeNav = () => setNavOpen(false);
 
   const farmerName = displayName || "Ram Singh";
   const farmerAvatar = avatarUrl || farmerRamSingh.src;
-  const resolvedTitle = headerTitle || getHeaderTitle(pathname);
+  const headerInfo = getHeaderInfo(pathname, t);
+  const resolvedTitle = headerTitle || headerInfo.title;
+  const resolvedSubtitle = headerSubtitle || headerInfo.subtitle;
 
   return (
     <div className="flex min-h-screen bg-[#f8faf9] font-sans text-foreground antialiased dark:bg-[#0c1410]">
@@ -291,7 +329,7 @@ export function DashboardShell({
                 AgriSmart <span className="text-[#22c55e]">AI</span>
               </span>
               <span className="text-[10px] font-medium text-emerald-200/70">
-                Smart Farming, Better Future
+                {t.dashboard.page.smartFarmingTagline}
               </span>
             </span>
           </Link>
@@ -332,9 +370,9 @@ export function DashboardShell({
                 <h1 className="font-display text-lg font-bold tracking-tight text-foreground sm:text-xl">
                   {resolvedTitle}
                 </h1>
-                {headerSubtitle && (
+                {resolvedSubtitle && (
                   <p className="hidden text-xs text-muted-foreground sm:block">
-                    {headerSubtitle}
+                    {resolvedSubtitle}
                   </p>
                 )}
               </div>
@@ -383,17 +421,7 @@ export function DashboardShell({
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              {/* Notification Bell with red badge '3' */}
-              <Link
-                href="/weather-climate#alerts"
-                aria-label="Alerts"
-                className="relative flex h-9.5 w-9.5 items-center justify-center rounded-full border border-border/80 bg-white text-foreground/80 transition-colors hover:bg-accent dark:bg-card"
-              >
-                <Bell className="h-4.5 w-4.5 text-foreground/75" />
-                <span className="absolute -right-0.5 -top-0.5 flex h-4.5 w-4.5 items-center justify-center rounded-full bg-rose-500 text-[10px] font-bold text-white shadow-2xs">
-                  3
-                </span>
-              </Link>
+
 
               {/* User Profile */}
               <DropdownMenu>
@@ -408,7 +436,7 @@ export function DashboardShell({
                       {farmerName}
                     </span>
                     <span className="text-[10px] font-medium text-muted-foreground">
-                      Premium Farmer
+                      {t.dashboard.page.premiumFarmer}
                     </span>
                   </div>
                   <ChevronDown className="hidden h-3.5 w-3.5 text-muted-foreground sm:block" />
@@ -428,7 +456,7 @@ export function DashboardShell({
                   >
                     <Link href="/settings">
                       <Settings className="h-4 w-4" />
-                      Settings & Profile
+                      {t.dashboard.page.settingsProfile}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem
@@ -436,7 +464,7 @@ export function DashboardShell({
                     className="gap-2 text-xs text-destructive focus:text-destructive cursor-pointer"
                   >
                     <LogOut className="h-4 w-4" />
-                    Logout
+                    {t.dashboard.page.logout}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

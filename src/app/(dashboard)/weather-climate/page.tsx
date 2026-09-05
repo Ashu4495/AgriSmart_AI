@@ -512,10 +512,7 @@ export default function WeatherClimatePage() {
   }).filter(Boolean) as { state: string; locations: string[] }[];
 
   return (
-    <DashboardShell
-      headerTitle="Weather & Climate"
-      headerSubtitle="Live satellite weather, forecasts, and agricultural climate intelligence."
-    >
+    <DashboardShell>
       <div className="space-y-6 pb-8">
         {/* ======================================================== */}
         {/* 1. INTERACTIVE LIVE LOCATION & CONTROLS TOOLBAR         */}
@@ -1303,35 +1300,7 @@ export default function WeatherClimatePage() {
 
 
 
-        {/* SMART WEATHER BANNER */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: 0.2 }}
-          className="flex flex-col gap-4 rounded-2xl border border-[#cbebd5] bg-[#eaf7ee] p-5 sm:flex-row sm:items-center sm:justify-between shadow-xs"
-        >
-          <div className="flex items-center gap-4">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#15803d] text-white shadow-sm">
-              <Sprout className="h-6 w-6" />
-            </div>
-            <div>
-              <h3 className="font-display text-base font-bold text-foreground sm:text-lg">
-                Smart Weather for Smarter Farming
-              </h3>
-              <p className="text-xs text-muted-foreground max-w-xl">
-                Get real-time weather updates, accurate forecasts and AI-powered
-                alerts to protect your crops and increase productivity.
-              </p>
-            </div>
-          </div>
-          <Link
-            href="/crop-intelligence"
-            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-[#15803d] px-5 py-2.5 text-xs font-bold text-white shadow-sm transition-all hover:bg-[#166534] hover:scale-[1.02]"
-          >
-            <Sparkles className="h-4 w-4" />
-            <span>Explore AI Insights →</span>
-          </Link>
-        </motion.div>
+
       </div>
     </DashboardShell>
   );

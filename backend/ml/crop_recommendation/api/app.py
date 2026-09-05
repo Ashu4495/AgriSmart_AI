@@ -61,12 +61,13 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_CANDIDATE_PATHS = [
     os.path.join(BASE_DIR, "..", "models", "crop_recommendation_model.joblib"),
     os.path.join(BASE_DIR, "models", "crop_recommendation_model.joblib"),
-    os.path.join(PROJECT_ROOT, "Crop_Recom_Model", "models", "crop_recommendation_model.joblib"),
+    os.path.join(PROJECT_ROOT, "backend", "ml", "crop_recommendation", "models", "crop_recommendation_model.joblib"),
 ]
 
 ENCODER_CANDIDATE_PATHS = [
     os.path.join(BASE_DIR, "..", "models", "crop_label_encoder.joblib"),
     os.path.join(BASE_DIR, "models", "crop_label_encoder.joblib"),
+    os.path.join(PROJECT_ROOT, "backend", "ml", "crop_recommendation", "models", "crop_label_encoder.joblib"),
     os.path.join(PROJECT_ROOT, "Crop_Recom_Model", "models", "crop_label_encoder.joblib"),
 ]
 

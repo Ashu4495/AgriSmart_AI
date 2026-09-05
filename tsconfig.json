@@ -25,6 +25,9 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@ml/*": [
+        "./backend/ml/*"
       ]
     }
   },
@@ -33,11 +36,11 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts"
+    ".next/dev/types/**/*.ts",
+    "backend/ml/**/*"
   ],
   "exclude": [
     "node_modules",
-    "Crop_Recom_Model",
     ".venv"
   ]
 }

@@ -1,0 +1,1 @@
+import { createClient } from '@insforge/sdk'; const c = createClient({baseUrl: 'https://5xs4vbzv.us-east.insforge.app', anonKey: 'ik_353ddb6e0431aef14578c5d66e897e98'}); c.ai.chat.completions.create({model: 'llama-3.1-8b', messages: [{role: 'user', content: 'test'}]}).then(console.log).catch(console.error);

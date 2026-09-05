@@ -10,7 +10,7 @@ import { Schemes } from "@/components/landing/schemes";
 import { AboutUs } from "@/components/landing/about";
 import { AppSection } from "@/components/landing/app-section";
 import { Footer } from "@/components/landing/footer";
-import { Assistant } from "@/components/landing/assistant";
+
 
 export const metadata: Metadata = {
   title: "AgriSmart AI — AI-Powered Insights for Smarter Farming",
@@ -43,7 +43,6 @@ export default function Index() {
         <AppSection />
       </main>
       <Footer />
-      <Assistant />
     </div>
   );
 }

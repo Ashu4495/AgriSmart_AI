@@ -418,10 +418,7 @@ export default function MarketFinancePage() {
   const bestState = currentCropData?.statePrices?.[0] || null;
 
   return (
-    <DashboardShell
-      headerTitle="Market & Finance"
-      headerSubtitle="Live APMC Mandi prices, 24 crop commodity feeds, multi-state comparison, and financial calculators."
-    >
+    <DashboardShell>
       <div className="space-y-6 pb-8">
         {/* Top 24 Crop Selector Ribbon */}
         <motion.div

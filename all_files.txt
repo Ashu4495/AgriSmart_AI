@@ -1,0 +1,187 @@
+D:\AgriSmart AI\.env
+D:\AgriSmart AI\.env.example
+D:\AgriSmart AI\.env.local
+D:\AgriSmart AI\.gitignore
+D:\AgriSmart AI\.vercelignore
+D:\AgriSmart AI\AGENTS.md
+D:\AgriSmart AI\all_files.txt
+D:\AgriSmart AI\components.json
+D:\AgriSmart AI\eslint.config.js
+D:\AgriSmart AI\insforge.toml
+D:\AgriSmart AI\migration.sql
+D:\AgriSmart AI\next-env.d.ts
+D:\AgriSmart AI\next.config.mjs
+D:\AgriSmart AI\package-lock.json
+D:\AgriSmart AI\package.json
+D:\AgriSmart AI\postcss.config.mjs
+D:\AgriSmart AI\README.md
+D:\AgriSmart AI\test_ai.ts
+D:\AgriSmart AI\tsconfig.json
+D:\AgriSmart AI\tsconfig.tsbuildinfo
+D:\AgriSmart AI\.insforge\project.json
+D:\AgriSmart AI\Climate Risk_model\__init__.py
+D:\AgriSmart AI\Climate Risk_model\pipeline.py
+D:\AgriSmart AI\Climate Risk_model\predict_bridge.py
+D:\AgriSmart AI\Climate Risk_model\README.md
+D:\AgriSmart AI\Climate Risk_model\api\schemas.py
+D:\AgriSmart AI\Climate Risk_model\api\service.py
+D:\AgriSmart AI\Climate Risk_model\api\test_climate_risk.py
+D:\AgriSmart AI\Climate Risk_model\config\__init__.py
+D:\AgriSmart AI\Climate Risk_model\config\config.py
+D:\AgriSmart AI\Climate Risk_model\config\thresholds.py
+D:\AgriSmart AI\Climate Risk_model\data\__init__.py
+D:\AgriSmart AI\Climate Risk_model\data\download_weather.py
+D:\AgriSmart AI\Climate Risk_model\data\loader.py
+D:\AgriSmart AI\Climate Risk_model\data\weather_dataset.csv
+D:\AgriSmart AI\Climate Risk_model\evaluation\__init__.py
+D:\AgriSmart AI\Climate Risk_model\evaluation\evaluation_metrics.json
+D:\AgriSmart AI\Climate Risk_model\evaluation\evaluation_report.txt
+D:\AgriSmart AI\Climate Risk_model\evaluation\evaluator.py
+D:\AgriSmart AI\Climate Risk_model\features\__init__.py
+D:\AgriSmart AI\Climate Risk_model\features\engineer.py
+D:\AgriSmart AI\Climate Risk_model\labeling\__init__.py
+D:\AgriSmart AI\Climate Risk_model\labeling\label_generator.py
+D:\AgriSmart AI\Climate Risk_model\models\__init__.py
+D:\AgriSmart AI\Climate Risk_model\models\drought_risk_model.joblib
+D:\AgriSmart AI\Climate Risk_model\models\feature_columns.json
+D:\AgriSmart AI\Climate Risk_model\models\flood_risk_model.joblib
+D:\AgriSmart AI\Climate Risk_model\models\heat_stress_model.joblib
+D:\AgriSmart AI\Climate Risk_model\models\label_mapping.json
+D:\AgriSmart AI\Climate Risk_model\models\pipeline_metadata.json
+D:\AgriSmart AI\Climate Risk_model\preprocessing\__init__.py
+D:\AgriSmart AI\Climate Risk_model\preprocessing\cleaner.py
+D:\AgriSmart AI\Climate Risk_model\training\__init__.py
+D:\AgriSmart AI\Climate Risk_model\training\trainer.py
+D:\AgriSmart AI\Crop_Recom_Model\assistant_bridge.py
+D:\AgriSmart AI\Crop_Recom_Model\predict_bridge.py
+D:\AgriSmart AI\Crop_Recom_Model\api\app.py
+D:\AgriSmart AI\Crop_Recom_Model\api\llm_service.py
+D:\AgriSmart AI\Crop_Recom_Model\api\rag_data.py
+D:\AgriSmart AI\Crop_Recom_Model\api\rag_service.py
+D:\AgriSmart AI\Crop_Recom_Model\api\README.md
+D:\AgriSmart AI\Crop_Recom_Model\api\requirements.txt
+D:\AgriSmart AI\Crop_Recom_Model\api\tool_router.py
+D:\AgriSmart AI\Crop_Recom_Model\data\Crop_Recommendation.csv
+D:\AgriSmart AI\Crop_Recom_Model\models\crop_label_encoder.joblib
+D:\AgriSmart AI\Crop_Recom_Model\models\crop_recommendation_model.joblib
+D:\AgriSmart AI\Crop_Recom_Model\notebook\crop_recommendation_eda.ipynb
+D:\AgriSmart AI\Government scheme\schemes.json
+D:\AgriSmart AI\public\agrismart-emblem.png
+D:\AgriSmart AI\public\favicon.png
+D:\AgriSmart AI\public\robots.txt
+D:\AgriSmart AI\scripts\seed-data.mjs
+D:\AgriSmart AI\scripts\seed-knowledge.sql
+D:\AgriSmart AI\scripts\seed-knowledge.ts
+D:\AgriSmart AI\scripts\setup-chat-db.sql
+D:\AgriSmart AI\scripts\setup-knowledge-db.sql
+D:\AgriSmart AI\src\app\globals.css
+D:\AgriSmart AI\src\app\layout.tsx
+D:\AgriSmart AI\src\app\page.tsx
+D:\AgriSmart AI\src\app\providers.tsx
+D:\AgriSmart AI\src\app\(auth)\auth\page.tsx
+D:\AgriSmart AI\src\app\(auth)\reset-password\page.tsx
+D:\AgriSmart AI\src\app\(dashboard)\layout.tsx
+D:\AgriSmart AI\src\app\(dashboard)\ai-assistant\page.tsx
+D:\AgriSmart AI\src\app\(dashboard)\crop-intelligence\page.tsx
+D:\AgriSmart AI\src\app\(dashboard)\crop-recommendation\page.tsx
+D:\AgriSmart AI\src\app\(dashboard)\dashboard\page.tsx
+D:\AgriSmart AI\src\app\(dashboard)\government-resources\page.tsx
+D:\AgriSmart AI\src\app\(dashboard)\knowledge\[id]\page.tsx
+D:\AgriSmart AI\src\app\(dashboard)\market-finance\page.tsx
+D:\AgriSmart AI\src\app\(dashboard)\profile\page.tsx
+D:\AgriSmart AI\src\app\(dashboard)\settings\page.tsx
+D:\AgriSmart AI\src\app\(dashboard)\soil-crop-health\page.tsx
+D:\AgriSmart AI\src\app\(dashboard)\weather-climate\page.tsx
+D:\AgriSmart AI\src\app\api\v1\assistant\chat\route.ts
+D:\AgriSmart AI\src\app\api\v1\assistant\insights\route.ts
+D:\AgriSmart AI\src\app\api\v1\assistant\popular-questions\route.ts
+D:\AgriSmart AI\src\app\api\v1\crops\recommend\route.ts
+D:\AgriSmart AI\src\app\api\v1\dashboard\route.ts
+D:\AgriSmart AI\src\app\api\v1\knowledge\route.ts
+D:\AgriSmart AI\src\app\api\v1\market\prices\route.ts
+D:\AgriSmart AI\src\app\api\v1\schemes\route.ts
+D:\AgriSmart AI\src\app\api\v1\settings\profile\route.ts
+D:\AgriSmart AI\src\app\api\v1\updates\route.ts
+D:\AgriSmart AI\src\app\api\v1\weather\alerts\route.ts
+D:\AgriSmart AI\src\app\api\v1\weather\climate-risk\route.ts
+D:\AgriSmart AI\src\app\api\v1\weather\crop-impact\route.ts
+D:\AgriSmart AI\src\app\api\v1\weather\current\route.ts
+D:\AgriSmart AI\src\app\api\v1\weather\forecast\route.ts
+D:\AgriSmart AI\src\assets\agrismart-emblem.png.asset.json
+D:\AgriSmart AI\src\assets\auth-side.jpg
+D:\AgriSmart AI\src\assets\crop-blackgram.jpg
+D:\AgriSmart AI\src\assets\crop-chickpea.jpg
+D:\AgriSmart AI\src\assets\crop-coconut.jpg
+D:\AgriSmart AI\src\assets\crop-coffee.jpg
+D:\AgriSmart AI\src\assets\crop-cotton.jpg
+D:\AgriSmart AI\src\assets\crop-jute.jpg
+D:\AgriSmart AI\src\assets\crop-kidneybeans.png
+D:\AgriSmart AI\src\assets\crop-lentil.jpg
+D:\AgriSmart AI\src\assets\crop-maize.jpg
+D:\AgriSmart AI\src\assets\crop-mango.jpg
+D:\AgriSmart AI\src\assets\crop-mothbeans.png
+D:\AgriSmart AI\src\assets\crop-mungbean.jpg
+D:\AgriSmart AI\src\assets\crop-muskmelon.png
+D:\AgriSmart AI\src\assets\crop-pigeonpeas.png
+D:\AgriSmart AI\src\assets\crop-pomegranate.jpg
+D:\AgriSmart AI\src\assets\crop-rice.jpg
+D:\AgriSmart AI\src\assets\crop-sugarcane.jpg
+D:\AgriSmart AI\src\assets\crop-wheat.jpg
+D:\AgriSmart AI\src\assets\crops-bg.jpg
+D:\AgriSmart AI\src\assets\farmer-ram-singh.jpg
+D:\AgriSmart AI\src\assets\header-farm-panoramic.jpg
+D:\AgriSmart AI\src\assets\hero-farmer.jpg
+D:\AgriSmart AI\src\assets\sidebar-landscape.jpg
+D:\AgriSmart AI\src\components\crop-recommendation\AIInsightCard.tsx
+D:\AgriSmart AI\src\components\crop-recommendation\CropInsights.tsx
+D:\AgriSmart AI\src\components\crop-recommendation\CropRecommendationBanner.tsx
+D:\AgriSmart AI\src\components\crop-recommendation\CropRecommendationCard.tsx
+D:\AgriSmart AI\src\components\crop-recommendation\CropRecommendationPage.tsx
+D:\AgriSmart AI\src\components\crop-recommendation\FieldConditionCard.tsx
+D:\AgriSmart AI\src\components\crop-recommendation\FieldConditionGrid.tsx
+D:\AgriSmart AI\src\components\crop-recommendation\LocationSelector.tsx
+D:\AgriSmart AI\src\components\crop-recommendation\recommendation-engine.ts
+D:\AgriSmart AI\src\components\crop-recommendation\RecommendationPanel.tsx
+D:\AgriSmart AI\src\components\crop-recommendation\RecommendationSteps.tsx
+D:\AgriSmart AI\src\components\crop-recommendation\regional-soil-data.ts
+D:\AgriSmart AI\src\components\crop-recommendation\types.ts
+D:\AgriSmart AI\src\components\dashboard\shell.tsx
+D:\AgriSmart AI\src\components\landing\about.tsx
+D:\AgriSmart AI\src\components\landing\app-section.tsx
+D:\AgriSmart AI\src\components\landing\assistant.tsx
+D:\AgriSmart AI\src\components\landing\crops.tsx
+D:\AgriSmart AI\src\components\landing\features.tsx
+D:\AgriSmart AI\src\components\landing\footer.tsx
+D:\AgriSmart AI\src\components\landing\hero.tsx
+D:\AgriSmart AI\src\components\landing\how-it-works.tsx
+D:\AgriSmart AI\src\components\landing\navbar.tsx
+D:\AgriSmart AI\src\components\landing\price-ticker.tsx
+D:\AgriSmart AI\src\components\landing\reveal.tsx
+D:\AgriSmart AI\src\components\landing\schemes.tsx
+D:\AgriSmart AI\src\components\landing\stats.tsx
+D:\AgriSmart AI\src\components\landing\user-controls.tsx
+D:\AgriSmart AI\src\components\settings\farm-form.tsx
+D:\AgriSmart AI\src\components\settings\location-form.tsx
+D:\AgriSmart AI\src\components\settings\notifications-form.tsx
+D:\AgriSmart AI\src\components\settings\preferences-form.tsx
+D:\AgriSmart AI\src\components\settings\profile-completion.tsx
+D:\AgriSmart AI\src\components\settings\profile-form.tsx
+D:\AgriSmart AI\src\components\settings\security-form.tsx
+D:\AgriSmart AI\src\components\settings\subscription-card.tsx
+D:\AgriSmart AI\src\components\ui\dropdown-menu.tsx
+D:\AgriSmart AI\src\components\ui\sonner.tsx
+D:\AgriSmart AI\src\lib\assistant-engine.ts
+D:\AgriSmart AI\src\lib\current-updates.ts
+D:\AgriSmart AI\src\lib\db.ts
+D:\AgriSmart AI\src\lib\i18n.tsx
+D:\AgriSmart AI\src\lib\insforge.ts
+D:\AgriSmart AI\src\lib\knowledge.ts
+D:\AgriSmart AI\src\lib\location.tsx
+D:\AgriSmart AI\src\lib\market.ts
+D:\AgriSmart AI\src\lib\schemes.ts
+D:\AgriSmart AI\src\lib\session.ts
+D:\AgriSmart AI\src\lib\theme.ts
+D:\AgriSmart AI\src\lib\use-auth.ts
+D:\AgriSmart AI\src\lib\use-profile.ts
+D:\AgriSmart AI\src\lib\utils.ts
+D:\AgriSmart AI\src\lib\weather.ts

@@ -39,6 +39,7 @@ import {
   fetchRecommendationFromApi,
   persistRecommendationToInsForge,
   getSavedRecommendationHistory,
+  clearSavedRecommendationHistory,
 } from "./recommendation-engine";
 import {
   type FieldConditionState,
@@ -280,6 +281,11 @@ export function CropRecommendationPage() {
   const [historyItems, setHistoryItems] = useState<RecommendationHistoryItem[]>(
     [],
   );
+
+  const handleClearHistory = useCallback(() => {
+    clearSavedRecommendationHistory();
+    setHistoryItems([]);
+  }, []);
 
   // Live weather fetcher
   const loadWeather = useCallback(
@@ -643,19 +649,6 @@ export function CropRecommendationPage() {
           <span>Personalized Crop Ranking</span>
         </button>
 
-        <button
-          type="button"
-          onClick={() => setActiveSubView("explanation")}
-          className={cn(
-            "flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer",
-            activeSubView === "explanation"
-              ? "bg-[#087a36] text-white shadow-xs"
-              : "border border-border/80 bg-card text-muted-foreground hover:text-foreground hover:bg-accent",
-          )}
-        >
-          <Sparkles className="h-3.5 w-3.5" />
-          <span>Why These Crops? (ML Explanation)</span>
-        </button>
 
         <button
           type="button"
@@ -671,19 +664,6 @@ export function CropRecommendationPage() {
           <span>Crop Profitability</span>
         </button>
 
-        <button
-          type="button"
-          onClick={() => setActiveSubView("risk")}
-          className={cn(
-            "flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer",
-            activeSubView === "risk"
-              ? "bg-[#087a36] text-white shadow-xs"
-              : "border border-border/80 bg-card text-muted-foreground hover:text-foreground hover:bg-accent",
-          )}
-        >
-          <ShieldAlert className="h-3.5 w-3.5" />
-          <span>Crop Risk Prediction</span>
-        </button>
       </div>
 
       {/* ======================================================== */}
@@ -1687,38 +1667,7 @@ export function CropRecommendationPage() {
         </motion.div>
       </div>
 
-      {/* ======================================================== */}
-      {/* 3. BOTTOM INFORMATION BANNER                             */}
-      {/* ======================================================== */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.25, delay: 0.1 }}
-        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-border/80 bg-white dark:bg-card p-4 shadow-xs"
-      >
-        <div className="flex items-center gap-3.5">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/60 dark:text-emerald-300">
-            <Info className="h-4.5 w-4.5" />
-          </div>
-          <div>
-            <h3 className="font-display text-sm font-bold text-foreground">
-              How Random Forest Recommendation Works
-            </h3>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Our trained ML model processes 7 key features: Nitrogen,
-              Phosphorus, Potassium, Temperature, Humidity, pH, and Rainfall.
-            </p>
-          </div>
-        </div>
 
-        <button
-          type="button"
-          onClick={() => setShowHowItWorksModal(true)}
-          className="inline-flex shrink-0 items-center gap-1.5 self-start sm:self-center rounded-xl border border-border/80 bg-white dark:bg-card px-4 py-2 text-xs font-bold text-foreground shadow-2xs hover:bg-accent transition-colors cursor-pointer"
-        >
-          <span>Learn More →</span>
-        </button>
-      </motion.div>
 
 
 
@@ -1732,25 +1681,37 @@ export function CropRecommendationPage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="relative max-h-[85vh] w-full max-w-xl overflow-y-auto rounded-3xl border border-border bg-white p-6 shadow-xl dark:bg-card space-y-4"
+              className="relative flex flex-col max-h-[85vh] w-full max-w-xl rounded-3xl border border-border bg-white p-6 shadow-xl dark:bg-card space-y-4"
             >
-              <div className="flex items-center justify-between pb-3 border-b">
+              <div className="flex shrink-0 items-center justify-between pb-3 border-b">
                 <div className="flex items-center gap-2">
                   <History className="h-5 w-5 text-emerald-600" />
                   <h2 className="font-display text-base font-bold text-foreground">
                     Recommendation History
                   </h2>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setShowHistoryModal(false)}
-                  className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:bg-accent cursor-pointer"
-                >
-                  <X className="h-4 w-4" />
-                </button>
+                <div className="flex items-center gap-2">
+                  {historyItems.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={handleClearHistory}
+                      className="text-xs text-red-600 hover:text-red-700 font-medium px-2 py-1 rounded hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer"
+                    >
+                      Clear All
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setShowHistoryModal(false)}
+                    className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:bg-accent cursor-pointer"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
               </div>
 
-              {historyItems.length === 0 ? (
+              <div className="flex-1 overflow-y-auto min-h-0 pr-2">
+                {historyItems.length === 0 ? (
                 <p className="text-xs text-muted-foreground py-6 text-center">
                   No recommendation history saved yet.
                 </p>
@@ -1788,7 +1749,8 @@ export function CropRecommendationPage() {
                     </div>
                   ))}
                 </div>
-              )}
+                )}
+              </div>
             </motion.div>
           </div>
         )}

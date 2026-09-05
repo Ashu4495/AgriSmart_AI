@@ -1,8 +1,8 @@
 import { getLiveMarketData } from "@/lib/market";
 import { fetchLiveWeather } from "@/lib/weather";
 import { getSchemesFromDB } from "@/lib/db";
+import { insforge } from "@/lib/insforge";
 
-// Standard Agronomic NPK & Fertilizer database
 export const FERTILIZER_GUIDELINES: Record<
   string,
   { npk: string; urea: number; dap: number; mop: number; schedule: string }
@@ -16,6 +16,7 @@ export const FERTILIZER_GUIDELINES: Record<
       "Apply full DAP, full MOP, and 1/3rd Urea as basal dose at sowing. Apply remaining Urea in 2 equal splits at CRI stage (21 DAS) and flowering stage.",
   },
   rice: {
+    
     npk: "100:50:50",
     urea: 110,
     dap: 108,
@@ -81,50 +82,6 @@ export const FERTILIZER_GUIDELINES: Record<
   },
 };
 
-// Core Agronomic Knowledge Chunks for RAG
-export const CORE_RAG_ARTICLES = [
-  {
-    id: "kb_wheat_rust",
-    title: "Wheat Leaf Rust (Puccinia triticina) Management",
-    category: "plant_pathology",
-    keywords: ["wheat", "rust", "yellow spots", "orange pustules", "leaf rust", "puccinia"],
-    content:
-      "Symptoms: Small, round to oval, orange-brown pustules scattered irregularly on the upper leaf surface. Under severe infestation, leaves dry up prematurely.\nManagement: Spray Propiconazole 25% EC @ 1 ml/litre or Tebuconazole 250 EC @ 1 ml/litre at initial appearance. Repeat after 15 days if required. Adopt resistant varieties like HD-2967, PBW-550, or DBW-187.",
-  },
-  {
-    id: "kb_tomato_blight",
-    title: "Tomato Early and Late Blight Diagnosis & Control",
-    category: "plant_pathology",
-    keywords: ["tomato", "blight", "early blight", "late blight", "black spots", "leaf spots", "concentric rings"],
-    content:
-      "Symptoms: Early Blight (Alternaria solani) exhibits concentric target-like brown-black rings on older leaves. Late Blight (Phytophthora infestans) shows water-soaked lesions that rapidly turn dark brown with white fungal growth underneath during humid weather.\nManagement: Spray Mancozeb 75% WP @ 2.5 g/L or Chlorothalonil @ 2 g/L preventively. For active late blight, spray Cymoxanil 8% + Mancozeb 64% WP @ 2 g/L or Dimethomorph 50% WP @ 1 g/L. Ensure good air circulation and avoid overhead sprinkling.",
-  },
-  {
-    id: "kb_nitrogen_deficiency",
-    title: "Nitrogen (N) Deficiency Symptoms and Correction",
-    category: "nutrient_deficiency",
-    keywords: ["nitrogen", "deficiency", "yellow leaves", "stunted growth", "chlorosis", "urea dosage"],
-    content:
-      "Symptoms: General yellowing (chlorosis) starting from older lower leaves while upper leaves remain pale green. Stunted plant height, reduced tillering/branching, and early maturation with low yield.\nCorrection: Apply top-dressing of Urea @ 25-30 kg/acre with light irrigation, or spray 2% foliar Urea (20 g/L water) in early morning for rapid absorption.",
-  },
-  {
-    id: "kb_aphid_pest",
-    title: "Aphid and Sucking Pest Management in Vegetables and Mustard",
-    category: "pest_management",
-    keywords: ["aphid", "aphids", "sucking pest", "leaf curling", "honey dew", "mustard aphid", "mahun"],
-    content:
-      "Symptoms: Colonies of small soft-bodied green, yellow, or black insects clustering on tender shoots, buds, and leaf undersides. Leaves curl, turn yellow, and develop black sooty mould.\nManagement: Install yellow sticky traps (15-20 traps/acre). Spray 5% Neem Seed Kernel Extract (NSKE) or Neem oil 3000 ppm @ 3-5 ml/L. For high infestation, spray Thiamethoxam 25% WG @ 0.3 g/L or Imidacloprid 17.8% SL @ 0.5 ml/L.",
-  },
-  {
-    id: "kb_pm_kisan",
-    title: "PM-KISAN Samman Nidhi Yojana Guidelines",
-    category: "government_scheme",
-    keywords: ["pm-kisan", "pm kisan", "samman nidhi", "6000", "installment", "eligibility", "scheme"],
-    content:
-      "Overview: Income support of Rs 6,000 per year in 3 equal four-monthly installments of Rs 2,000 directly transferred to Aadhaar-linked bank accounts of eligible landholding farmer families.\nEligibility: All landholding farmer families with cultivable land in their name. Institutional landholders and high-income tax-paying professionals are excluded.\nPortal: https://pmkisan.gov.in (Requires e-KYC and Aadhaar seeding).",
-  },
-];
-
 export interface ChatMessage {
   sender: string;
   text: string;
@@ -158,36 +115,123 @@ export interface AssistantResponse {
   timestamp: string;
 }
 
-/**
- * Searches local RAG articles using keyword similarity
- */
-export function searchKnowledgeBase(query: string, limit = 2) {
-  const qLower = query.toLowerCase();
-  const scored = CORE_RAG_ARTICLES.map((article) => {
-    let score = 0;
-    for (const kw of article.keywords) {
-      if (qLower.includes(kw)) score += 2;
-    }
-    if (article.title.toLowerCase().includes(qLower)) score += 3;
-    return { article, score };
-  });
-
-  return scored
-    .filter((s) => s.score > 0)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, limit)
-    .map((s) => s.article);
+interface LLMRouterResponse {
+  intent: "GREETING" | "GENERAL_FARMING" | "CROP_RECOMMENDATION" | "IRRIGATION" | "FERTILIZER" | "SOIL" | "DISEASE" | "PEST" | "WEATHER" | "MARKET" | "YIELD" | "PROFIT" | "GOVERNMENT_SCHEME" | "CROP_GUIDE" | "FARMING_TASK" | "CLIMATE_RISK" | "UNKNOWN";
+  requires_tool: boolean;
+  requires_rag: boolean;
+  extracted_crop: string | null;
 }
 
 /**
- * Generates an LLM response via OpenRouter (InsForge AI Gateway) or fallback
+ * Log chat interaction asynchronously
  */
-async function callOpenRouter(
-  prompt: string,
-  systemPrompt: string,
-  apiKey: string,
-): Promise<string | null> {
+async function logChatInteraction(sessionId: string, userMsg: string, aiReply: string, intent: string, metadata: any) {
   try {
+    const timestamp = new Date().toISOString();
+    // Insert session if not exists
+    await insforge.database.from("chat_sessions").upsert(
+      { id: sessionId, updated_at: timestamp },
+      { onConflict: 'id' }
+    );
+    
+    // Insert user message
+    await insforge.database.from("chat_messages").insert({
+      session_id: sessionId,
+      role: "user",
+      content: userMsg,
+      timestamp: timestamp,
+      metadata: {}
+    });
+
+    // Insert AI message
+    await insforge.database.from("chat_messages").insert({
+      session_id: sessionId,
+      role: "assistant",
+      content: aiReply,
+      timestamp: new Date().toISOString(),
+      metadata: { intent, ...metadata }
+    });
+  } catch (error) {
+    console.error("[Chat Logging Error]", error); // Silently fail to not disrupt user
+  }
+}
+
+/**
+ * Searches InsForge Knowledge Hub DB for RAG context
+ */
+export async function searchKnowledgeBase(query: string, limit = 2) {
+  try {
+    // Fetch all resources and perform a basic relevance check (mocking vector search for simplicity)
+    const { data, error } = await insforge.database
+      .from("knowledge_resources")
+      .select("*");
+      
+    if (error || !data) return [];
+    
+    const qLower = query.toLowerCase();
+    
+    const scored = data.map((article) => {
+      let score = 0;
+      const titleLower = (article.title || "").toLowerCase();
+      const descLower = (article.description || "").toLowerCase();
+      
+      // Keywords to check
+      const queryWords = qLower.split(' ').filter(w => w.length > 3);
+      for (const w of queryWords) {
+        if (titleLower.includes(w)) score += 5;
+        if (descLower.includes(w)) score += 2;
+      }
+      
+      // Intent specific boosts
+      if (qLower.includes("irrigation") && (titleLower.includes("irrigation") || descLower.includes("irrigation"))) score += 10;
+      if (qLower.includes("soil") && (titleLower.includes("soil") || descLower.includes("soil"))) score += 10;
+      if (qLower.includes("pest") && (titleLower.includes("pest") || descLower.includes("pest"))) score += 10;
+      
+      return { article, score };
+    });
+
+    return scored
+      .filter((s) => s.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, limit)
+      .map((s) => s.article);
+      
+  } catch (err) {
+    console.error("[RAG Error]", err);
+    return [];
+  }
+}
+
+/**
+ * Uses LLM to detect the intent of the user's question with conversation history
+ */
+async function detectIntentWithLLM(
+  prompt: string,
+  history: ChatMessage[],
+  apiKey: string
+): Promise<LLMRouterResponse> {
+  try {
+    const historyContext = history.slice(-4).map(m => `${m.sender}: ${m.text}`).join('\n');
+    
+    const systemPrompt = `You are an intent router for an agricultural chatbot.
+Classify the user's latest query into exactly one of the following intents:
+GREETING, GENERAL_FARMING, CROP_RECOMMENDATION, IRRIGATION, FERTILIZER, SOIL, DISEASE, PEST, WEATHER, MARKET, YIELD, PROFIT, GOVERNMENT_SCHEME, CROP_GUIDE, FARMING_TASK, CLIMATE_RISK, UNKNOWN.
+
+Context (History):
+${historyContext}
+
+Latest User Query: "${prompt}"
+
+Also extract the crop name if they are referring to one (e.g. "them" might refer to "tomatoes" based on history).
+Respond in pure JSON format:
+{
+  "intent": "...",
+  "requires_tool": true/false, // True if live data like WEATHER or MARKET is needed
+  "requires_rag": true/false, // True if knowledge like IRRIGATION, DISEASE, GOVERNMENT_SCHEME is needed
+  "extracted_crop": "crop name or null"
+}
+Ensure the output is ONLY valid JSON.`;
+
     const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -197,30 +241,99 @@ async function callOpenRouter(
         "X-Title": "AgriSmart AI Assistant",
       },
       body: JSON.stringify({
-        model: "meta-llama/llama-3.3-70b-instruct:free",
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: prompt },
-        ],
+        model: "meta-llama/llama-3.3-70b-instruct",
+        messages: [{ role: "user", content: systemPrompt }],
+        temperature: 0.1,
+        response_format: { type: "json_object" }
+      }),
+      signal: AbortSignal.timeout(12000),
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      const content = data?.choices?.[0]?.message?.content?.trim();
+      if (content) {
+        // Strip markdown if any
+        const cleaned = content.replace(/```json/g, "").replace(/```/g, "").trim();
+        return JSON.parse(cleaned) as LLMRouterResponse;
+      }
+    } else {
+      const errorText = await res.text();
+      console.error(`[Intent LLM Error] HTTP ${res.status} ${res.statusText}:`, errorText);
+    }
+  } catch (e) {
+    console.warn("[Intent LLM Error]", e);
+  }
+  
+  // Safe Fallback if LLM fails
+  const qLower = prompt.toLowerCase();
+  return {
+    intent: qLower.match(/hi|hello|namaste|hey/) ? "GREETING" : "GENERAL_FARMING",
+    requires_tool: false,
+    requires_rag: false,
+    extracted_crop: null
+  };
+}
+
+/**
+ * Generates the final LLM response providing context and tools
+ */
+async function callLLMForResponse(
+  userMsg: string,
+  history: ChatMessage[],
+  systemPrompt: string,
+  apiKey: string,
+): Promise<string | null> {
+  try {
+    const messages = [
+      { role: "system", content: systemPrompt }
+    ];
+    
+    // Append last 5 messages for context
+    const recentHistory = history.slice(-5);
+    for (const msg of recentHistory) {
+      // Don't duplicate the latest message if it's already in history
+      if (msg.text !== userMsg) {
+        messages.push({
+          role: msg.sender === "assistant" ? "assistant" : "user",
+          content: msg.text
+        });
+      }
+    }
+    
+    // Add latest message
+    messages.push({ role: "user", content: userMsg });
+
+    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+        "HTTP-Referer": "https://agrismart.ai",
+        "X-Title": "AgriSmart AI Assistant",
+      },
+      body: JSON.stringify({
+        model: "meta-llama/llama-3.3-70b-instruct",
+        messages,
         temperature: 0.3,
         max_tokens: 750,
       }),
-      signal: AbortSignal.timeout(9000),
+      signal: AbortSignal.timeout(20000),
     });
 
     if (res.ok) {
       const data = await res.json();
       return data?.choices?.[0]?.message?.content?.trim() || null;
+    } else {
+      const errorText = await res.text();
+      console.error(`[OpenRouter Response Error] HTTP ${res.status} ${res.statusText}:`, errorText);
     }
   } catch (e) {
-    console.warn("[OpenRouter Gateway API Call Error]", e);
+    console.warn("[OpenRouter Response Error]", e);
   }
   return null;
 }
 
-/**
- * Full TypeScript Intelligent Farming Assistant Engine
- */
 export async function processAssistantQuery(input: AssistantProcessInput): Promise<AssistantResponse> {
   const query = (input.message || "").trim();
   const qLower = query.toLowerCase();
@@ -228,23 +341,36 @@ export async function processAssistantQuery(input: AssistantProcessInput): Promi
   const loc = input.location || "your farm area";
   const session_id = input.session_id || `session-${Date.now()}`;
   const timestamp = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  const openRouterKey = process.env.OPENROUTER_API_KEY;
 
-  let intent = "GENERAL";
   let hasCrops = false;
   let cropsList: Array<{ crop: string; probability: number }> = [];
   let sourcesList: Array<{ title: string; url?: string }> = [];
   let toolData: any = null;
+  let ragDocs: any[] = [];
+  
+  // 1. Determine Intent via LLM
+  let routerResult: LLMRouterResponse = {
+    intent: "UNKNOWN",
+    requires_tool: false,
+    requires_rag: false,
+    extracted_crop: null
+  };
 
-  // 1. INTENT: Weather Query
-  if (
-    qLower.includes("weather") ||
-    qLower.includes("rain") ||
-    qLower.includes("temperature") ||
-    qLower.includes("forecast") ||
-    qLower.includes("mausam") ||
-    qLower.includes("barish")
-  ) {
-    intent = "WEATHER";
+  if (openRouterKey) {
+     routerResult = await detectIntentWithLLM(query, input.history || [], openRouterKey);
+  } else {
+     // Basic fallback if no LLM key
+     if (qLower.match(/hi|hello|namaste|hey/)) routerResult.intent = "GREETING";
+     else if (qLower.includes("weather") || qLower.includes("rain")) { routerResult.intent = "WEATHER"; routerResult.requires_tool = true; }
+     else if (qLower.includes("price") || qLower.includes("mandi")) { routerResult.intent = "MARKET"; routerResult.requires_tool = true; }
+     else { routerResult.intent = "GENERAL_FARMING"; routerResult.requires_rag = true; }
+  }
+
+  const intent = routerResult.intent;
+
+  // 2. Fetch Tools or RAG based on Intent
+  if (intent === "WEATHER") {
     try {
       const lat = input.latitude ?? 23.2599;
       const lon = input.longitude ?? 77.4126;
@@ -259,90 +385,19 @@ export async function processAssistantQuery(input: AssistantProcessInput): Promi
       };
       sourcesList.push({ title: `Live Weather (${loc})`, url: "/weather-climate" });
     } catch {
-      toolData = { location: loc, status: "Forecast normal" };
+      toolData = { location: loc, status: "Weather information is temporarily unavailable." };
     }
-  }
-  // 2. INTENT: Mandi / Market Price Query
-  else if (
-    qLower.includes("price") ||
-    qLower.includes("rate") ||
-    qLower.includes("mandi") ||
-    qLower.includes("bhav") ||
-    qLower.includes("cost") ||
-    qLower.includes("profit")
-  ) {
-    intent = "MARKET_DATA";
+  } else if (intent === "MARKET") {
     const market = getLiveMarketData();
-    const matchedCrop = market.find((c) => qLower.includes(c.id) || qLower.includes(c.name.toLowerCase()));
+    const matchedCrop = market.find((c) => qLower.includes(c.id) || (routerResult.extracted_crop && c.name.toLowerCase() === routerResult.extracted_crop.toLowerCase()));
     if (matchedCrop) {
-      toolData = {
-        crop: matchedCrop.name,
-        modalPrice: `₹${matchedCrop.price} / ${matchedCrop.unit}`,
-        topMarket: matchedCrop.topMarkets[0] || null,
-        statePrices: matchedCrop.statePrices.slice(0, 3),
-      };
+      toolData = { crop: matchedCrop.name, modalPrice: `₹${matchedCrop.price} / ${matchedCrop.unit}` };
       sourcesList.push({ title: `${matchedCrop.name} Mandi Rates`, url: "/market-finance" });
     } else {
-      toolData = {
-        topCrops: market.slice(0, 4).map((c) => ({ name: c.name, price: `₹${c.price}/${c.unit}` })),
-      };
+      toolData = { topCrops: market.slice(0, 4).map((c) => ({ name: c.name, price: `₹${c.price}/${c.unit}` })) };
       sourcesList.push({ title: "Live Mandi Prices", url: "/market-finance" });
     }
-  }
-  // 3. INTENT: Fertilizer / Soil Nutrition
-  else if (
-    qLower.includes("fertilizer") ||
-    qLower.includes("urea") ||
-    qLower.includes("dap") ||
-    qLower.includes("npk") ||
-    qLower.includes("khad") ||
-    qLower.includes("potash") ||
-    qLower.includes("nitrogen") ||
-    qLower.includes("deficiency")
-  ) {
-    intent = "FERTILIZER_RECOMMENDATION";
-    const cropKey = Object.keys(FERTILIZER_GUIDELINES).find((k) => qLower.includes(k)) || input.crop?.toLowerCase() || "wheat";
-    const guide = FERTILIZER_GUIDELINES[cropKey] || FERTILIZER_GUIDELINES.wheat;
-    toolData = {
-      crop: cropKey,
-      npkRatio: guide.npk,
-      ureaKgPerHa: guide.urea,
-      dapKgPerHa: guide.dap,
-      mopKgPerHa: guide.mop,
-      schedule: guide.schedule,
-    };
-    sourcesList.push({ title: `${cropKey.toUpperCase()} Nutrient & Fertilizer Advisory`, url: "/soil-crop-health" });
-  }
-  // 4. INTENT: Government Schemes
-  else if (
-    qLower.includes("scheme") ||
-    qLower.includes("yojana") ||
-    qLower.includes("pm-kisan") ||
-    qLower.includes("pmfby") ||
-    qLower.includes("kcc") ||
-    qLower.includes("subsidy") ||
-    qLower.includes("sarkari")
-  ) {
-    intent = "GOVERNMENT_SCHEMES";
-    try {
-      const schemes = await getSchemesFromDB();
-      const relevant = schemes.slice(0, 3);
-      toolData = { schemes: relevant.map((s) => ({ name: s.name, benefit: s.benefit, applyUrl: s.apply_url })) };
-      sourcesList.push({ title: "Government Schemes Portal", url: "/government-resources" });
-    } catch {
-      toolData = { scheme: "PM-KISAN, PMFBY, Kisan Credit Card" };
-    }
-  }
-  // 5. INTENT: Crop Recommendation Query
-  else if (
-    qLower.includes("which crop") ||
-    qLower.includes("recommend") ||
-    qLower.includes("grow") ||
-    qLower.includes("fasal") ||
-    qLower.includes("what to plant") ||
-    qLower.includes("suitable crop")
-  ) {
-    intent = "CROP_RECOMMENDATION";
+  } else if (intent === "CROP_RECOMMENDATION") {
     hasCrops = true;
     cropsList = [
       { crop: "Rice", probability: 93.5 },
@@ -351,70 +406,88 @@ export async function processAssistantQuery(input: AssistantProcessInput): Promi
     ];
     sourcesList.push({ title: "Random Forest Crop Recommendation Model", url: "/crop-recommendation" });
     toolData = { recommendations: cropsList, location: loc };
-  }
-
-  // RAG Search
-  const ragDocs = searchKnowledgeBase(query, 2);
-  for (const doc of ragDocs) {
-    sourcesList.push({ title: doc.title, url: "/government-resources" });
-  }
-
-  // LLM Synthesis
-  const openRouterKey = process.env.OPENROUTER_API_KEY;
-  let generatedReply: string | null = null;
-
-  if (openRouterKey && openRouterKey.startsWith("sk-or-v1-")) {
-    const systemPrompt = `You are "AgriSmart AI Assistant", an expert, friendly agricultural scientist assisting Indian farmers.
-Principles:
-1. Provide accurate, practical, actionable advice.
-2. Rely strictly on provided Tool Data and Knowledge Base. Never invent fake weather or prices.
-3. If visual disease diagnosis is required, explain possible causes and advise uploading a leaf photo to the Soil & Crop Health scanner.
-4. If language is Hindi, reply in natural, easy-to-understand Hindi (Devanagari script). Keep formatting clean and mobile-friendly.`;
-
-    const userPrompt = `[FARMER QUERY]: ${query}
-[LOCATION]: ${loc}
-[LANGUAGE]: ${isHindi ? "Hindi" : "English"}
-[LIVE TOOL DATA]: ${JSON.stringify(toolData || {})}
-[RAG KNOWLEDGE ARTICLES]: ${JSON.stringify(ragDocs)}`;
-
-    generatedReply = await callOpenRouter(userPrompt, systemPrompt, openRouterKey);
-  }
-
-  // Deterministic Agronomic Fallback if LLM is offline
-  if (!generatedReply) {
-    if (intent === "WEATHER" && toolData) {
-      generatedReply = isHindi
-        ? `📍 **${loc} के लिए मौसम रिपोर्ट:**\n- तापमान: ${toolData.temperature}\n- मौसम: ${toolData.condition}\n- आर्द्रता: ${toolData.humidity}\n- हवा की गति: ${toolData.wind}\n\n**कृषि सलाह:** मौसम अनुकूल है। आवश्यकतानुसार हल्की सिंचाई एवं कीट निगरानी जारी रखें।`
-        : `📍 **Weather Report for ${loc}:**\n- Temperature: ${toolData.temperature}\n- Conditions: ${toolData.condition}\n- Humidity: ${toolData.humidity}\n- Wind Speed: ${toolData.wind}\n\n**Agri Advisory:** Weather conditions are favorable for field operations. Maintain routine crop scouting.`;
-    } else if (intent === "MARKET_DATA" && toolData) {
-      if (toolData.crop) {
-        generatedReply = isHindi
-          ? `📊 **${toolData.crop} मंडी भाव:**\n- मॉडल मूल्य: **${toolData.modalPrice}**\n- प्रमुख मंडी: ${toolData.topMarket ? `${toolData.topMarket.market} (₹${toolData.topMarket.price})` : "स्थानीय मंडी"}\n\nअधिक जानकारी के लिए मार्केट व वित्त पेज देखें।`
-          : `📊 **Live Mandi Rates for ${toolData.crop}:**\n- Modal Price: **${toolData.modalPrice}**\n- Primary Market: ${toolData.topMarket ? `${toolData.topMarket.market} (₹${toolData.topMarket.price})` : "Local Mandi"}\n\nFor detailed multi-state trends, visit the Market & Finance section.`;
-      } else {
-        generatedReply = isHindi
-          ? `📊 **प्रमुख फसलों के ताज़ा मंडी भाव:**\n${toolData.topCrops?.map((c: any) => `- ${c.name}: ${c.price}`).join("\n")}`
-          : `📊 **Live Mandi Rates for Key Commodities:**\n${toolData.topCrops?.map((c: any) => `- ${c.name}: ${c.price}`).join("\n")}`;
-      }
-    } else if (intent === "FERTILIZER_RECOMMENDATION" && toolData) {
-      generatedReply = isHindi
-        ? `🌱 **${toolData.crop.toUpperCase()} के लिए संतुलित उर्वरक मात्रा (प्रति हेक्टेयर):**\n- संस्तुत NPK अनुपात: **${toolData.npkRatio}**\n- यूरिया: **${toolData.ureaKgPerHa} किग्रा**\n- डीएपी (DAP): **${toolData.dapKgPerHa} किग्रा**\n- एमओपी (Potash): **${toolData.mopKgPerHa} किग्रा**\n\n**लागू करने का समय:** ${toolData.schedule}`
-        : `🌱 **Scientific Fertilizer Dosage for ${toolData.crop.toUpperCase()} (per hectare):**\n- Recommended NPK Ratio: **${toolData.npkRatio}**\n- Urea: **${toolData.ureaKgPerHa} kg/ha**\n- DAP: **${toolData.dapKgPerHa} kg/ha**\n- MOP (Potash): **${toolData.mopKgPerHa} kg/ha**\n\n**Application Schedule:** ${toolData.schedule}`;
-    } else if (intent === "CROP_RECOMMENDATION") {
-      generatedReply = isHindi
-        ? `🌾 **रैंडम फॉरेस्ट ML मॉडल द्वारा सुझाई गई उपयुक्त फसलें (${loc}):**\n1. **धान (Rice)** — 93.5% उपयुक्तता\n2. **जूट (Jute)** — 6.5% उपयुक्तता\n\nयह सिफारिश आपके क्षेत्र की मिट्टी की संरचना, तापमान एवं औसत वर्षा के आधार पर तैयार की गई है।`
-        : `🌾 **Trained Random Forest ML Model Crop Recommendations (${loc}):**\n1. **Rice (Paddy)** — 93.5% Match Confidence\n2. **Jute** — 6.5% Match Confidence\n\nThis recommendation is calculated based on soil NPK, pH value, and seasonal agro-climatic conditions.`;
-    } else if (ragDocs.length > 0) {
-      const topDoc = ragDocs[0];
-      generatedReply = isHindi
-        ? `📖 **कृषि ज्ञानकोष जानकारी — ${topDoc.title}:**\n\n${topDoc.content}`
-        : `📖 **Agricultural Advisory — ${topDoc.title}:**\n\n${topDoc.content}`;
-    } else {
-      generatedReply = isHindi
-        ? `नमस्ते! मैं आपका एग्रीस्मार्ट कृषि सलाहकार हूँ। आप मुझसे फसल चयन, मौसम, खाद की सही मात्रा, रोग नियंत्रण या सरकारी योजनाओं के बारे में पूछ सकते हैं।`
-        : `Hello! I am your AgriSmart AI Farming Advisor. You can ask me about crop selection, live weather forecasts, fertilizer dosage calculation, pest diagnosis, or government schemes.`;
+  } else if (intent === "GOVERNMENT_SCHEME") {
+    try {
+      const schemes = await getSchemesFromDB();
+      toolData = { schemes: schemes.slice(0, 3).map((s) => ({ name: s.name, benefit: s.benefit })) };
+      sourcesList.push({ title: "Government Schemes Portal", url: "/government-resources" });
+    } catch {
+      toolData = { scheme: "PM-KISAN, PMFBY" };
+    }
+  } else if (intent === "FERTILIZER") {
+     const cropKey = Object.keys(FERTILIZER_GUIDELINES).find((k) => (routerResult.extracted_crop?.toLowerCase().includes(k) || qLower.includes(k))) || "wheat";
+     toolData = { fertilizer_guide: FERTILIZER_GUIDELINES[cropKey] || FERTILIZER_GUIDELINES.wheat };
+     sourcesList.push({ title: `${cropKey.toUpperCase()} Fertilizer Advisory`, url: "/soil-crop-health" });
+  } else if (intent !== "GREETING") {
+    // For Irrigation, Soil, Disease, Pest, General - Fetch RAG
+    ragDocs = await searchKnowledgeBase(query, 2);
+    for (const doc of ragDocs) {
+      sourcesList.push({ title: doc.title, url: `/knowledge/${doc.id}` });
     }
   }
+
+  // 3. Generate Final Reply using LLM
+  let generatedReply: string | null = null;
+  
+  if (intent === "GREETING") {
+    generatedReply = isHindi
+      ? `नमस्ते! मैं आपका एग्रीस्मार्ट कृषि सलाहकार हूँ। आप मुझसे फसल चयन, मौसम, खाद की सही मात्रा, सिंचाई या रोग नियंत्रण के बारे में पूछ सकते हैं।`
+      : `Hello! I am your AgriSmart AI Farming Advisor. You can ask me about irrigation tips, live weather forecasts, fertilizer dosage, pest diagnosis, or crop selection.`;
+  } else if (openRouterKey) {
+    const systemPrompt = `You are "AgriSmart AI Assistant", an expert, friendly agricultural scientist assisting Indian farmers.
+Principles:
+1. Provide accurate, practical, actionable advice. Format cleanly with bullet points if needed.
+2. Rely strictly on provided Tool Data and Knowledge Base context to answer the user's question. 
+3. If tool data indicates an error (e.g., weather unavailable), clearly tell the farmer the specific data is temporarily unavailable.
+4. Answer concisely without overly technical jargon.
+5. If the user asks about an image/disease, state that they can upload a leaf photo to the Soil & Crop Health scanner for AI diagnosis.
+6. Language: If language is Hindi, reply in natural Devanagari Hindi. Otherwise English.
+
+[CONTEXT DATA]:
+Intent Detected: ${intent}
+Extracted Crop Context: ${routerResult.extracted_crop || 'None'}
+Location: ${loc}
+Language: ${isHindi ? "Hindi" : "English"}
+Tool Data: ${JSON.stringify(toolData || {})}
+Knowledge Base Articles: ${JSON.stringify(ragDocs.map(r => r.title + ': ' + r.description))}
+
+Answer the user's latest question directly using the context provided above.`;
+
+    generatedReply = await callLLMForResponse(query, input.history || [], systemPrompt, openRouterKey);
+  } else {
+    // Mock response if no API key is provided for local testing
+    if (intent === "FERTILIZER" && toolData?.fertilizer_guide) {
+      generatedReply = `Based on standard guidelines, here is the fertilizer schedule: ${toolData.fertilizer_guide.schedule}`;
+    } else if (intent === "MARKET" && toolData?.modalPrice) {
+      generatedReply = `The current market rate for ${toolData.crop} is ${toolData.modalPrice}.`;
+    } else if (intent === "WEATHER" && toolData?.temperature) {
+      generatedReply = `The current weather in ${loc} is ${toolData.temperature} and ${toolData.condition}.`;
+    } else if (ragDocs.length > 0) {
+      generatedReply = `I found some relevant information: ${ragDocs[0].description}`;
+    } else {
+      generatedReply = `(Simulated AI Response - OPENROUTER_API_KEY is missing) I would typically provide detailed agricultural advice here based on your query: "${query}".`;
+    }
+  }
+
+  // 4. Safe Fallbacks if LLM Generation Failed completely
+  if (!generatedReply) {
+    if (ragDocs && ragDocs.length > 0) {
+      generatedReply = `I found some relevant information: ${ragDocs[0].description}`;
+    } else if (intent === "WEATHER" && toolData?.temperature) {
+      generatedReply = `The current weather in ${loc} is ${toolData.temperature} and ${toolData.condition}.`;
+    } else if (intent === "MARKET" && toolData?.modalPrice) {
+      generatedReply = `The current market rate for ${toolData.crop} is ${toolData.modalPrice}.`;
+    } else if (intent === "FERTILIZER" && toolData?.fertilizer_guide) {
+      generatedReply = `Based on standard guidelines, here is the fertilizer schedule: ${toolData.fertilizer_guide.schedule}`;
+    } else {
+      generatedReply = isHindi 
+        ? `मुझे खेद है, मैं अभी इस प्रश्न का उत्तर देने में अस्थायी रूप से असमर्थ हूँ। कृपया पुनः प्रयास करें।`
+        : `I'm temporarily unable to process your question. Please try again.`;
+    }
+  }
+
+  // Log to database asynchronously
+  logChatInteraction(session_id, query, generatedReply, intent, { toolData, ragSources: sourcesList.length });
 
   return {
     session_id,

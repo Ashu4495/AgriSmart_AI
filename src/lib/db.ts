@@ -5,13 +5,24 @@ export interface FarmerProfileRecord {
   user_id: string;
   full_name: string;
   phone?: string;
+  dob?: string;
+  language?: string;
+  preferred_units?: string;
+  profile_photo?: string;
+  farm_name?: string;
+  farming_type?: string;
+  farm_size_acres?: number;
+  years_experience?: number;
+  primary_crop?: string;
+  organic_farming?: boolean;
+  soil_type?: string;
+  irrigation_source?: string;
   state?: string;
   district?: string;
   village?: string;
-  farm_size_acres?: number;
-  primary_crop?: string;
-  soil_type?: string;
-  irrigation_source?: string;
+  pin_code?: string;
+  preferences_json?: any;
+  notifications_json?: any;
   updated_at?: string;
 }
 
@@ -32,6 +43,8 @@ export interface DiseaseScanRecord {
   id?: string;
   user_id: string;
   image_url: string;
+  image_key?: string;
+  disease_id?: string;
   crop_name: string;
   disease_name: string;
   confidence: number;
@@ -145,11 +158,29 @@ export async function upsertFarmerProfile(profile: Partial<FarmerProfileRecord> 
     updated_at: new Date().toISOString(),
   };
 
-  const { data, error } = await insforge.database
+  const { data: existing } = await insforge.database
     .from("farm_profiles")
-    .upsert([payload], { onConflict: "user_id" })
-    .select()
-    .single();
+    .select("id")
+    .eq("user_id", profile.user_id)
+    .maybeSingle();
+
+  let result;
+  if (existing && existing.id) {
+    result = await insforge.database
+      .from("farm_profiles")
+      .update(payload)
+      .eq("user_id", profile.user_id)
+      .select()
+      .single();
+  } else {
+    result = await insforge.database
+      .from("farm_profiles")
+      .insert([payload])
+      .select()
+      .single();
+  }
+
+  const { data, error } = result;
 
   if (error) {
     console.error("[DB upsertFarmerProfile Error]", error);

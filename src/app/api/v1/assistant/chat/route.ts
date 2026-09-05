@@ -16,12 +16,14 @@ async function runPythonAssistantBridge(payload: AssistantChatPayload): Promise<
     const projectRoot = process.cwd();
     const isWindows = process.platform === "win32";
     const pythonExe = isWindows
-      ? path.join(projectRoot, "Crop_Recom_Model", ".venv", "Scripts", "python.exe")
-      : path.join(projectRoot, "Crop_Recom_Model", ".venv", "bin", "python");
+      ? path.join(projectRoot, "backend", "ml", "crop_recommendation", ".venv", "Scripts", "python.exe")
+      : path.join(projectRoot, "backend", "ml", "crop_recommendation", ".venv", "bin", "python");
 
     const scriptPath = path.join(
       projectRoot,
-      "Crop_Recom_Model",
+      "backend",
+      "ml",
+      "crop_recommendation",
       "assistant_bridge.py",
     );
 
@@ -120,11 +122,11 @@ export async function POST(req: Request) {
       data: result,
     });
   } catch (err: any) {
-    console.error("[Assistant API Error]", err);
+    console.error("[Assistant API Error]", err?.message, err?.stack);
     return NextResponse.json(
       {
         success: false,
-        error: "AI Assistant is temporarily unavailable. Please try again.",
+        error: err?.message || "AI Assistant is temporarily unavailable. Please try again.",
       },
       { status: 500 },
     );

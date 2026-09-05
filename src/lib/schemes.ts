@@ -185,7 +185,7 @@ export function categorizeScheme(scheme: RawScheme): {
  */
 export function getRawSchemes(): RawScheme[] {
   try {
-    const filePath = path.join(process.cwd(), "Government scheme", "schemes.json");
+    const filePath = path.join(process.cwd(), "backend", "knowledge", "sources", "schemes.json");
     if (!fs.existsSync(filePath)) {
       console.error("[Schemes Service] schemes.json not found at:", filePath);
       return [];

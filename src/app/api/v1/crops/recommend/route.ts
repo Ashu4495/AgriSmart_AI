@@ -47,15 +47,19 @@ async function runPythonBridgePrediction(features: {
     const pythonExe = isWindows
       ? path.join(
           projectRoot,
-          "Crop_Recom_Model",
+          "backend",
+          "ml",
+          "crop_recommendation",
           ".venv",
           "Scripts",
           "python.exe",
         )
-      : path.join(projectRoot, "Crop_Recom_Model", ".venv", "bin", "python");
+      : path.join(projectRoot, "backend", "ml", "crop_recommendation", ".venv", "bin", "python");
     const scriptPath = path.join(
       projectRoot,
-      "Crop_Recom_Model",
+      "backend",
+      "ml",
+      "crop_recommendation",
       "predict_bridge.py",
     );
 
