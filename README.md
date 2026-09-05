@@ -1,6 +1,6 @@
 # 🌾 AgriSmart AI — Smart Agricultural Intelligence & Crop Advisory Platform
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-https%3A%2F%2F5xs4vbzv.insforge.site-168447?style=for-the-badge&logo=vercel)](https://5xs4vbzv.insforge.site)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-https%3A%2F%2Fagrismartai.insforge.site-168447?style=for-the-badge&logo=vercel)](https://agrismartai.insforge.site/)
 [![InsForge BaaS](https://img.shields.io/badge/Backend-InsForge_PostgreSQL-3b82f6?style=for-the-badge)](https://5xs4vbzv.us-east.insforge.app)
 [![Next.js](https://img.shields.io/badge/Frontend-Next.js_16_Turbopack-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![Machine Learning](https://img.shields.io/badge/ML-Scikit--Learn_Random_Forest-orange?style=for-the-badge&logo=scikit-learn)](https://scikit-learn.org/)
@@ -12,7 +12,7 @@ An end-to-end, production-ready AI and Machine Learning agricultural intelligenc
 
 ## 🌐 Live Production Application
 
-- **Live Deployed App:** [https://5xs4vbzv.insforge.site](https://5xs4vbzv.insforge.site)
+- **Live Deployed App:** [https://agrismartai.insforge.site/](https://agrismartai.insforge.site/)
 - **InsForge Backend Project:** `AgriSmart AI` (`https://5xs4vbzv.us-east.insforge.app`)
 - **Deployment Status:** ✅ Live & Operational
 
